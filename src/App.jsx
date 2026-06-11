@@ -817,7 +817,7 @@ function App() {
             <p>Enjoy Lohegaon's peaceful environment while staying close to classrooms, cafes, grocery stores, and local transport networks.</p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: '48px', alignItems: 'center', textAlign: 'left' }}>
+          <div className="location-grid">
             <div>
               <h3 style={{ fontSize: '1.5rem', marginBottom: '16px' }}>Address Details</h3>
               <p style={{ fontSize: '1.05rem', color: 'var(--text-heading)', fontWeight: 600, marginBottom: '8px' }}>
@@ -852,42 +852,18 @@ function App() {
               </div>
             </div>
 
-            {/* Custom SVG/HTML Map Mockup Widget */}
+            {/* Real Google Map Embed */}
             <div className="map-mockup shadow-lg">
-              <div className="map-bg">
-                {/* Horizontal road */}
-                <div className="map-road map-road-h"></div>
-                {/* Vertical road */}
-                <div className="map-road map-road-v"></div>
-
-                {/* Point 1: DY Patil University */}
-                <div className="map-pin" style={{ top: '30%', left: '25%' }}>
-                  <div className="map-pin-circle"></div>
-                  <div className="map-pin-label">D.Y. Patil University Campus</div>
-                </div>
-
-                {/* Road Connector line (walking path) */}
-                <svg style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
-                  <path 
-                    d="M 120 72 L 230 115 L 290 155" 
-                    fill="none" 
-                    stroke="var(--accent-color)" 
-                    strokeWidth="3" 
-                    strokeDasharray="6 4"
-                  />
-                  <text x="180" y="85" fill="var(--text-heading)" fontSize="10" fontWeight="700" transform="rotate(21 180 85)">
-                    1.2 Km (12 Mins Walk)
-                  </text>
-                </svg>
-
-                {/* Point 2: Moonlight Hostel */}
-                <div className="map-pin" style={{ top: '65%', left: '72%' }}>
-                  <div className="map-pin-circle accent">
-                    <Home size={12} color="var(--text-heading)" />
-                  </div>
-                  <div className="map-pin-label accent">Moonlight Hostel (Lane 6)</div>
-                </div>
-              </div>
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d236.3194150083901!2d73.91477640792495!3d18.614092696003972!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2c692ed565e23%3A0x2c2a47070c0ebe05!2sJW77%2BJW4%2C%20Lane%20Number%206%2C%20Lohegaon%2C%20Pune%2C%20Maharashtra%20411047!5e0!3m2!1sen!2sin!4v1781172505631!5m2!1sen!2sin" 
+                width="100%" 
+                height="100%" 
+                style={{ border: 0 }} 
+                allowFullScreen="" 
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Moonlight Hostel Google Map Location"
+              ></iframe>
             </div>
           </div>
         </div>
@@ -925,7 +901,7 @@ function App() {
             </div>
             <div className="footer-contact-item">
               <Mail size={18} className="footer-contact-icon" />
-              <span>info@moonlighthostel.com</span>
+              <span>info@moonlighthostels.com</span>
             </div>
             <div className="footer-contact-item">
               <Clock size={18} className="footer-contact-icon" />

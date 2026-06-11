@@ -1053,15 +1053,37 @@ a {
   background-color: #ffffff;
 }
 
+/* Location Grid Layout */
+.location-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 48px;
+  align-items: center;
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .location-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
 /* Map Mockup Widget */
 .map-mockup {
   position: relative;
   background-color: #e2e8f0;
   border-radius: var(--radius-md);
-  height: 240px;
-  margin-top: 32px;
+  height: 350px;
+  margin-top: 0;
   overflow: hidden;
   border: 1px solid var(--border);
+}
+
+@media (max-width: 768px) {
+  .map-mockup {
+    height: 280px;
+  }
 }
 
 .map-bg {
