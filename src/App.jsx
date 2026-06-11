@@ -9,7 +9,6 @@ import {
   Gamepad2, 
   MapPin, 
   Phone, 
-  CreditCard, 
   ArrowRight, 
   CheckCircle2, 
   Info, 
@@ -18,13 +17,10 @@ import {
   Sparkles,
   Home,
   UserCheck,
-  Compass,
   FileText,
-  HelpCircle,
   Menu,
   X,
-  Mail,
-  ChevronRight
+  Mail
 } from 'lucide-react'
 import roomImg from './assets/room.png'
 import loungeImg from './assets/lounge.png'
@@ -53,6 +49,8 @@ function App() {
     message: ''
   })
   const [formSubmitted, setFormSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState(null)
 
   // Scroll handler for navbar background
   useEffect(() => {
@@ -138,26 +136,76 @@ function App() {
     : amenitiesList.filter(item => item.category === activeCategory)
 
   // Calculator Math
-  // Comfort PG Monthly cost is ₹1,60,000 / 12 = ₹13,333
-  const comfortPGMonthlyRent = 13333
+  // Moonlight Hostel Monthly cost is ₹1,60,000 / 12 = ₹13,333
+  const moonlightHostelMonthlyRent = 13333
   // Outside standard basic room rent for 2 sharing is around ₹7,000 in Lohegaon (empty)
   const outsideRentCost = 7000 
   
   const totalOutsideMonthly = outsideRentCost + outsideMealCost + outsideLaundryCost + outsideWifiCost + outsideCleaningCost
-  const comfortPGTotalIncluded = comfortPGMonthlyRent // Everything else is ₹0
-  const monthlySavings = totalOutsideMonthly - comfortPGTotalIncluded
+  const moonlightHostelTotalIncluded = moonlightHostelMonthlyRent // Everything else is ₹0
+  const monthlySavings = totalOutsideMonthly - moonlightHostelTotalIncluded
   const yearlySavings = monthlySavings * 12
 
   // Handle Form Submit
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault()
-    if (formData.name && formData.phone) {
+    if (!formData.name || !formData.phone) return
+
+    setIsSubmitting(true)
+    setSubmitError(null)
+
+    const webhookUrl = import.meta.env.VITE_FORM_WEBHOOK_URL || ''
+    const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || ''
+
+    try {
+      if (webhookUrl) {
+        const response = await fetch(webhookUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData)
+        })
+
+        if (!response.ok) {
+          throw new Error('Failed to submit callback request to the server.')
+        }
+      } else if (accessKey) {
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            access_key: accessKey,
+            subject: `New Call Back Request from ${formData.name}`,
+            from_name: 'Moonlight Hostel Website',
+            ...formData
+          })
+        })
+
+        const data = await response.json()
+        if (!response.ok || !data.success) {
+          throw new Error(data.message || 'Failed to submit form via Web3Forms.')
+        }
+      } else {
+        // Fallback simulation (default behavior if no keys are provided)
+        console.log('Simulating form submission (no API URL or Web3Forms key configured):', formData)
+        await new Promise((resolve) => setTimeout(resolve, 1000))
+      }
+
       setFormSubmitted(true)
       // Reset form after a timeout
       setTimeout(() => {
         setFormData({ name: '', phone: '', email: '', college: 'D.Y. Patil University', message: '' })
         setFormSubmitted(false)
       }, 5000)
+    } catch (err) {
+      console.error('Submission error:', err)
+      setSubmitError(err.message || 'Something went wrong. Please try again or contact Somnath directly.')
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -167,8 +215,8 @@ function App() {
       <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
         <div className="container nav-container">
           <a href="#home" className="logo" onClick={(e) => { e.preventDefault(); scrollTo('home'); }}>
-            <span className="logo-icon">C</span>
-            <span>Comfort PG & Hostel</span>
+            <span className="logo-icon">M</span>
+            <span>Moonlight Hostel</span>
           </a>
 
           {/* Desktop Links */}
@@ -222,7 +270,7 @@ function App() {
             
             <h1 className="hero-title">
               Premium Boys' Coliving <br />
-              <span className="gradient-text-accent">Comfort That Feels Like Home</span>
+              <span className="gradient-text-accent">Coliving That Feels Like Home</span>
             </h1>
             
             <p className="hero-desc">
@@ -256,7 +304,7 @@ function App() {
           
           <div className="hero-media animate-fade-in">
             <div className="hero-img-container">
-              <img src={roomImg} alt="Comfort PG Premium Double Room with Balcony" />
+              <img src={roomImg} alt="Moonlight Hostel Premium Double Room with Balcony" />
             </div>
             
             {/* Floating Card for micro-interaction/visual flair */}
@@ -327,7 +375,7 @@ function App() {
         <div className="container about-grid">
           <div className="hero-media" style={{ height: '480px' }}>
             <div className="hero-img-container" style={{ borderRadius: 'var(--radius-lg)' }}>
-              <img src={loungeImg} alt="Comfort PG Recreation Lounge and TT Table" />
+              <img src={loungeImg} alt="Moonlight Hostel Recreation Lounge and TT Table" />
             </div>
             <div className="floating-card glass-panel shadow-xl" style={{ top: '32px', right: '-32px', left: 'auto', bottom: 'auto' }}>
               <div className="about-bullet-icon" style={{ backgroundColor: 'var(--success-soft)', color: 'var(--success)' }}>
@@ -341,10 +389,10 @@ function App() {
           </div>
 
           <div className="about-content">
-            <span className="section-label">About Comfort PG</span>
+            <span className="section-label">About Moonlight Hostel</span>
             <h2 className="section-title">A Welcoming Community & Premium Living Standard</h2>
             <p style={{ marginBottom: '20px' }}>
-              Comfort PG and Hostel is managed with one core principle: creating a **"home away from home"** for young minds pursuing their dreams in Pune. Founded in 2026, our brand new building offers college students a sanctuary that eliminates the daily hassles of housekeeping, laundry, and search for healthy food.
+              Moonlight Hostel is managed with one core principle: creating a **"home away from home"** for young minds pursuing their dreams in Pune. Founded in 2026, our brand new building offers college students a sanctuary that eliminates the daily hassles of housekeeping, laundry, and search for healthy food.
             </p>
             <p style={{ marginBottom: '24px' }}>
               We limit our total capacity to just **50 students** to ensure that our dining, common areas, and amenities are never overcrowded. This cozy layout fosters a vibrant community of like-minded students, encouraging peer learning and lasting friendships.
@@ -431,7 +479,7 @@ function App() {
           <div className="calc-container">
             <div className="calc-panel">
               <h3 className="calc-title">Customize Your Outside Estimates</h3>
-              <p className="calc-desc">Adjust the sliders to estimate what you would spend on your own outside of a fully inclusive package at Comfort PG.</p>
+              <p className="calc-desc">Adjust the sliders to estimate what you would spend on your own outside of a fully inclusive package at Moonlight Hostel.</p>
               
               <div className="calc-sliders">
                 {/* Sliders for Food */}
@@ -538,9 +586,9 @@ function App() {
                     </span>
                   </div>
                   <div className="breakdown-item total" style={{ borderTop: 'none', paddingTop: 0 }}>
-                    <span>Comfort PG Total Included</span>
+                    <span>Moonlight Hostel Total Included</span>
                     <span className="breakdown-value" style={{ color: 'var(--accent-color)' }}>
-                      ₹{comfortPGTotalIncluded.toLocaleString('en-IN')}
+                      ₹{moonlightHostelTotalIncluded.toLocaleString('en-IN')}
                     </span>
                   </div>
                 </div>
@@ -580,7 +628,7 @@ function App() {
             <div className="booking-info-panel">
               <h3>Pricing & Inclusions</h3>
               <p style={{ color: 'var(--text-main)', marginBottom: '20px' }}>
-                Comfort PG offers a highly straightforward, annual transparent pricing package. There are no hidden monthly maintenance fees or surprise charges.
+                Moonlight Hostel offers a highly straightforward, annual transparent pricing package. There are no hidden monthly maintenance fees or surprise charges.
               </p>
               
               <div className="card" style={{ padding: '24px', backgroundColor: 'var(--primary-ultra-light)', borderLeft: '4px solid var(--accent-color)' }}>
@@ -597,7 +645,7 @@ function App() {
                   <div className="step-num">1</div>
                   <div className="step-content">
                     <h4>Make Bank Deposit</h4>
-                    <p>Transfer the initial booking token or full deposit to the Comfort PG bank account detailed below.</p>
+                    <p>Transfer the initial booking token or full deposit to the Moonlight Hostel bank account detailed below.</p>
                   </div>
                 </div>
 
@@ -629,7 +677,7 @@ function App() {
                 <div className="bank-details-grid">
                   <div className="bank-detail-item">
                     <span className="bank-detail-lbl">Account Name</span>
-                    <span className="bank-detail-val">Comfort PG</span>
+                    <span className="bank-detail-val">Moonlight Hostel</span>
                   </div>
                   <div className="bank-detail-item">
                     <span className="bank-detail-lbl">Bank Name</span>
@@ -673,6 +721,7 @@ function App() {
                       placeholder="Enter full name" 
                       value={formData.name}
                       onChange={(e) => setFormData({...formData, name: e.target.value})}
+                      disabled={isSubmitting}
                     />
                   </div>
 
@@ -686,6 +735,7 @@ function App() {
                       placeholder="e.g. +91 98765 43210" 
                       value={formData.phone}
                       onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                      disabled={isSubmitting}
                     />
                   </div>
 
@@ -698,6 +748,7 @@ function App() {
                       placeholder="e.g. student@domain.com"
                       value={formData.email}
                       onChange={(e) => setFormData({...formData, email: e.target.value})}
+                      disabled={isSubmitting}
                     />
                   </div>
 
@@ -709,6 +760,7 @@ function App() {
                       className="form-control" 
                       value={formData.college}
                       onChange={(e) => setFormData({...formData, college: e.target.value})}
+                      disabled={isSubmitting}
                     />
                   </div>
 
@@ -721,12 +773,20 @@ function App() {
                       placeholder="Mention preferred move-in date or any questions..."
                       value={formData.message}
                       onChange={(e) => setFormData({...formData, message: e.target.value})}
+                      disabled={isSubmitting}
                     ></textarea>
                   </div>
 
-                  <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>
-                    Submit Callback Request <ArrowRight size={18} />
+                  <button type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={isSubmitting}>
+                    {isSubmitting ? 'Sending Request...' : 'Submit Callback Request'}
+                    {!isSubmitting && <ArrowRight size={18} />}
                   </button>
+
+                  {submitError && (
+                    <div style={{ color: '#ef4444', backgroundColor: 'rgba(239, 68, 68, 0.1)', padding: '12px', borderRadius: 'var(--radius-sm)', marginTop: '16px', fontSize: '0.875rem', fontWeight: 500, textAlign: 'center' }}>
+                      ⚠️ {submitError}
+                    </div>
+                  )}
                 </form>
               )}
 
@@ -734,7 +794,7 @@ function App() {
               <div style={{ marginTop: '24px', textAlign: 'center' }}>
                 <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '12px' }}>Or chat directly for instant room assignment:</span>
                 <a 
-                  href="https://wa.me/919270132323?text=Hi%20Somnath,%20I'm%20interested%20in%20booking%20a%20double%20sharing%20room%20at%20Comfort%20Boys%20Hostel." 
+                  href="https://wa.me/919270132323?text=Hi%20Somnath,%20I'm%20interested%20in%20booking%20a%20double%20sharing%20room%20at%20Moonlight%20Hostel." 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="btn btn-accent" 
@@ -761,7 +821,7 @@ function App() {
             <div>
               <h3 style={{ fontSize: '1.5rem', marginBottom: '16px' }}>Address Details</h3>
               <p style={{ fontSize: '1.05rem', color: 'var(--text-heading)', fontWeight: 600, marginBottom: '8px' }}>
-                Comfort Boys Hostel
+                Moonlight Boys Hostel
               </p>
               <p style={{ color: 'var(--text-main)', marginBottom: '24px', lineHeight: 1.7 }}>
                 D.Y. Patil University Road,<br />
@@ -820,12 +880,12 @@ function App() {
                   </text>
                 </svg>
 
-                {/* Point 2: Comfort Boys Hostel */}
+                {/* Point 2: Moonlight Hostel */}
                 <div className="map-pin" style={{ top: '65%', left: '72%' }}>
                   <div className="map-pin-circle accent">
                     <Home size={12} color="var(--text-heading)" />
                   </div>
-                  <div className="map-pin-label accent">Comfort Boys Hostel (Lane 6)</div>
+                  <div className="map-pin-label accent">Moonlight Hostel (Lane 6)</div>
                 </div>
               </div>
             </div>
@@ -837,7 +897,7 @@ function App() {
       <footer className="footer">
         <div className="container footer-grid">
           <div className="footer-brand">
-            <h3>Comfort PG & Hostel</h3>
+            <h3>Moonlight Hostel</h3>
             <p>Premium boys' coliving space in Lohegaon, Pune. Built to provide a warm, safe, and focused atmosphere for ambitious university students.</p>
             <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Managed by University Code of Rules & Regulation. Anti-Ragging Compliant.</span>
           </div>
@@ -865,7 +925,7 @@ function App() {
             </div>
             <div className="footer-contact-item">
               <Mail size={18} className="footer-contact-icon" />
-              <span>info@comfortboyshostel.com</span>
+              <span>info@moonlighthostel.com</span>
             </div>
             <div className="footer-contact-item">
               <Clock size={18} className="footer-contact-icon" />
@@ -875,7 +935,7 @@ function App() {
         </div>
 
         <div className="container footer-bottom">
-          <span>&copy; {new Date().getFullYear()} Comfort Boys Hostel. All Rights Reserved. Designed for D.Y. Patil Students.</span>
+          <span>&copy; {new Date().getFullYear()} Moonlight Hostel. All Rights Reserved. Designed for D.Y. Patil Students.</span>
           <span style={{ display: 'flex', gap: '24px' }}>
             <a href="https://forms.gle/82tYE6cUqCWuKfyD9" target="_blank" rel="noopener noreferrer" className="footer-link">Online Admission Form</a>
             <a href="#booking" className="footer-link" onClick={(e) => { e.preventDefault(); scrollTo('booking'); }}>Bank Transfer Info</a>
