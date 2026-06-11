@@ -1,18 +1,18 @@
-import { useState, useEffect } from 'react'
-import { 
-  Wifi, 
-  Shield, 
-  Utensils, 
-  Shirt, 
-  Zap, 
-  BookOpen, 
-  Gamepad2, 
-  MapPin, 
-  Phone, 
-  ArrowRight, 
-  CheckCircle2, 
-  Info, 
-  Clock, 
+import { useState, useEffect, useCallback } from 'react'
+import {
+  Wifi,
+  Shield,
+  Utensils,
+  Shirt,
+  Zap,
+  BookOpen,
+  Gamepad2,
+  MapPin,
+  Phone,
+  ArrowRight,
+  CheckCircle2,
+  Info,
+  Clock,
   MessageSquare,
   Sparkles,
   Home,
@@ -20,17 +20,38 @@ import {
   FileText,
   Menu,
   X,
-  Mail
+  Mail,
+  ChevronLeft,
+  ChevronRight,
+  Play
 } from 'lucide-react'
-import roomImg from './assets/room.png'
-import loungeImg from './assets/lounge.png'
+import roomImg from './assets/moonlight-pg.png'
+import loungeImg from './assets/lounge.jpg'
+
+const galleryItems = [
+  { type: 'video', src: '/VN20260609_185218.mp4', category: 'videos', title: 'Moonlight Walkthrough Tour', desc: 'Take a virtual video tour of our brand new premium hostel building and amenities.' },
+  { type: 'image', src: '/photos/building_exterior.jpg', category: 'common', title: 'Moonlight Hostel Facade', desc: 'Modern elevation and premium gated entry of our brand new hostel building.' },
+  { type: 'image', src: '/photos/IMG_6685.JPG', category: 'common', title: 'Serene Welcoming Lobby', desc: 'A peaceful entrance lobby featuring a beautiful Ganesha idol installation.' },
+  { type: 'image', src: '/photos/IMG_6594.JPG', category: 'common', title: 'Balcony Chess Lounge', desc: 'Fresh air balcony space featuring a chess table for student recreation.' },
+  { type: 'image', src: '/photos/IMG_6595.JPG', category: 'common', title: 'Balcony Carrom Zone', desc: 'Relax and engage in friendly carrom matches in our spacious outdoor balcony.' },
+  { type: 'image', src: '/photos/IMG_6606.JPG', category: 'common', title: 'Study & Dining Hall', desc: 'Spacious common lounge tables ideal for group study sessions and dining.' },
+  { type: 'image', src: '/photos/IMG_6663.JPG', category: 'rooms', title: 'Premium Double Sharing Room', desc: 'Beautifully furnished bedroom layout with comfortable orthopedic bedding.' },
+  { type: 'image', src: '/photos/IMG_6667.JPG', category: 'rooms', title: 'Personal Wardrobe Space', desc: 'Large, secure, lockable wardrobe cabinets for organized student storage.' },
+  { type: 'image', src: '/photos/IMG_6670.JPG', category: 'rooms', title: 'Executive Double Bed Layout', desc: 'Fully equipped rooms showing side-by-side study tables and premium beds.' },
+  { type: 'image', src: '/photos/IMG_6672.JPG', category: 'rooms', title: 'Personal Workstation Close-up', desc: 'Ergonomic study desk with adequate lighting and power points next to the bed.' },
+  { type: 'image', src: '/photos/IMG_6673.JPG', category: 'rooms', title: 'Dedicated Study Station', desc: 'Individual study desks designed to boost focus and productivity.' },
+  { type: 'image', src: '/photos/IMG_6678.JPG', category: 'rooms', title: 'Comfort Double Sharing Room', desc: 'Well-ventilated, premium-grade double sharing bedroom with private balcony access.' },
+  { type: 'image', src: '/photos/IMG_6664.JPG', category: 'amenities', title: 'Modern Attached Bathroom', desc: 'Equipped with a high-capacity geyser and premium shower fixtures.' },
+  { type: 'image', src: '/photos/IMG_6665.JPG', category: 'amenities', title: 'Hygienic Sanitary Fittings', desc: 'Clean, tiled western-style washroom maintained to peak sanitary standards.' },
+  { type: 'image', src: '/photos/IMG_6675.JPG', category: 'amenities', title: 'Premium Sink & Vanity Mirror', desc: 'Modern sink layout with a clean vanity mirror in the attached washroom.' }
+]
 
 function App() {
   // Navigation active section tracking
   const [activeSection, setActiveSection] = useState('home')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  
+
   // Amenities category filter state
   const [activeCategory, setActiveCategory] = useState('all')
 
@@ -52,6 +73,10 @@ function App() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState(null)
 
+  // Gallery active filter & lightbox index
+  const [galleryFilter, setGalleryFilter] = useState('all')
+  const [lightboxIndex, setLightboxIndex] = useState(null)
+
   // Scroll handler for navbar background
   useEffect(() => {
     const handleScroll = () => {
@@ -62,7 +87,7 @@ function App() {
       }
 
       // Determine active section on scroll
-      const sections = ['home', 'about', 'amenities', 'calculator', 'booking', 'contact']
+      const sections = ['home', 'about', 'gallery', 'amenities', 'calculator', 'booking', 'contact']
       const scrollPosition = window.scrollY + 120
 
       for (const section of sections) {
@@ -104,7 +129,7 @@ function App() {
     { id: 4, name: 'Hot Water Geyser', desc: 'Equipped with heavy-duty geysers for uninterrupted hot water access.', category: 'living', icon: Zap },
     { id: 5, name: 'Remote Control Fans', desc: 'Premium fans with wireless remote controllers for customizable comfort.', category: 'living', icon: Sparkles },
     { id: 6, name: 'High-Quality Mattresses & Pillows', desc: 'Fully furnished with comfortable orthopedic mattresses, pillows, and designer curtains.', category: 'living', icon: Home },
-    
+
     // Services & Convenience
     { id: 7, name: 'Free Laundry Service', desc: 'No extra charges! Full laundry facilities are completely free for all residents.', category: 'services', icon: Shirt },
     { id: 8, name: 'High-Speed Wi-Fi', desc: 'High-bandwidth fiber internet connection across the entire building for study and leisure.', category: 'services', icon: Wifi },
@@ -131,16 +156,16 @@ function App() {
   ]
 
   // Filter amenities list based on state
-  const filteredAmenities = activeCategory === 'all' 
-    ? amenitiesList 
+  const filteredAmenities = activeCategory === 'all'
+    ? amenitiesList
     : amenitiesList.filter(item => item.category === activeCategory)
 
   // Calculator Math
   // Moonlight Hostel Monthly cost is ₹1,60,000 / 12 = ₹13,333
   const moonlightHostelMonthlyRent = 13333
   // Outside standard basic room rent for 2 sharing is around ₹7,000 in Lohegaon (empty)
-  const outsideRentCost = 7000 
-  
+  const outsideRentCost = 7000
+
   const totalOutsideMonthly = outsideRentCost + outsideMealCost + outsideLaundryCost + outsideWifiCost + outsideCleaningCost
   const moonlightHostelTotalIncluded = moonlightHostelMonthlyRent // Everything else is ₹0
   const monthlySavings = totalOutsideMonthly - moonlightHostelTotalIncluded
@@ -209,6 +234,38 @@ function App() {
     }
   }
 
+  const navigateLightbox = useCallback((direction) => {
+    if (lightboxIndex === null) return
+    let newIndex = lightboxIndex + direction
+    if (newIndex < 0) {
+      newIndex = galleryItems.length - 1
+    } else if (newIndex >= galleryItems.length) {
+      newIndex = 0
+    }
+    setLightboxIndex(newIndex)
+  }, [lightboxIndex])
+
+  // Lightbox keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (lightboxIndex === null) return
+      if (e.key === 'ArrowLeft') {
+        navigateLightbox(-1)
+      } else if (e.key === 'ArrowRight') {
+        navigateLightbox(1)
+      } else if (e.key === 'Escape') {
+        setLightboxIndex(null)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [lightboxIndex, navigateLightbox])
+
+  const filteredGalleryItems = galleryFilter === 'all'
+    ? galleryItems
+    : galleryItems.filter(item => item.category === galleryFilter)
+
   return (
     <>
       {/* Navigation Header */}
@@ -223,6 +280,7 @@ function App() {
           <div className="nav-links desktop-nav">
             <a href="#home" className={`nav-link ${activeSection === 'home' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('home'); }}>Home</a>
             <a href="#about" className={`nav-link ${activeSection === 'about' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('about'); }}>About Us</a>
+            <a href="#gallery" className={`nav-link ${activeSection === 'gallery' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('gallery'); }}>Gallery</a>
             <a href="#amenities" className={`nav-link ${activeSection === 'amenities' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('amenities'); }}>Amenities</a>
             <a href="#calculator" className={`nav-link ${activeSection === 'calculator' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('calculator'); }}>Rent Calculator</a>
             <a href="#booking" className={`nav-link ${activeSection === 'booking' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('booking'); }}>Booking info</a>
@@ -236,8 +294,8 @@ function App() {
           </div>
 
           {/* Hamburger Menu Icon */}
-          <button 
-            className="menu-toggle" 
+          <button
+            className="menu-toggle"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle Menu"
           >
@@ -249,6 +307,7 @@ function App() {
         <div className={`mobile-nav ${mobileMenuOpen ? 'open' : ''}`}>
           <a href="#home" className={`nav-link ${activeSection === 'home' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('home'); }}>Home</a>
           <a href="#about" className={`nav-link ${activeSection === 'about' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('about'); }}>About Us</a>
+          <a href="#gallery" className={`nav-link ${activeSection === 'gallery' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('gallery'); }}>Gallery</a>
           <a href="#amenities" className={`nav-link ${activeSection === 'amenities' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('amenities'); }}>Amenities</a>
           <a href="#calculator" className={`nav-link ${activeSection === 'calculator' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('calculator'); }}>Rent Calculator</a>
           <a href="#booking" className={`nav-link ${activeSection === 'booking' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('booking'); }}>Booking info</a>
@@ -267,16 +326,16 @@ function App() {
               <Sparkles size={16} className="gradient-text-accent" />
               <span>Brand New Building for the 2026 Academic Year</span>
             </div>
-            
+
             <h1 className="hero-title">
               Premium Boys' Coliving <br />
               <span className="gradient-text-accent">Coliving That Feels Like Home</span>
             </h1>
-            
+
             <p className="hero-desc">
               Experience the perfect balance of study and comfort. Located on <strong>D.Y. Patil University Road, Lohegaon, Pune</strong>, we offer highly premium double-occupancy rooms with private balconies, nutritious dining, laundry, and multi-tier biometric security. Designed only for college students.
             </p>
-            
+
             <div className="hero-actions">
               <button className="btn btn-primary" onClick={() => scrollTo('amenities')}>
                 Explore Amenities <ArrowRight size={18} />
@@ -285,7 +344,7 @@ function App() {
                 Check Pricing
               </button>
             </div>
-            
+
             <div className="hero-stats">
               <div className="stat-item">
                 <span className="stat-val">1.2 km</span>
@@ -301,12 +360,12 @@ function App() {
               </div>
             </div>
           </div>
-          
+
           <div className="hero-media animate-fade-in">
             <div className="hero-img-container">
               <img src={roomImg} alt="Moonlight Hostel Premium Double Room with Balcony" />
             </div>
-            
+
             {/* Floating Card for micro-interaction/visual flair */}
             <div className="floating-card glass-panel shadow-xl">
               <div className="about-bullet-icon">
@@ -428,8 +487,67 @@ function App() {
         </div>
       </section>
 
+      {/* Photo & Video Gallery Section */}
+      <section id="gallery" className="section" style={{ backgroundColor: '#ffffff' }}>
+        <div className="container">
+          <div className="section-header">
+            <span className="section-label">Media Tour</span>
+            <h2 className="section-title">Take a Visual Tour of Moonlight Hostel</h2>
+            <p>Explore our premium rooms, clean dining space, common areas, and high-quality amenities. Watch the walkthrough video to see the real campus coliving experience.</p>
+          </div>
+
+          {/* Media Category Tabs */}
+          <div className="amenities-tabs">
+            <button className={`tab-btn ${galleryFilter === 'all' ? 'active' : ''}`} onClick={() => setGalleryFilter('all')}>All Media</button>
+            <button className={`tab-btn ${galleryFilter === 'videos' ? 'active' : ''}`} onClick={() => setGalleryFilter('videos')}>Videos</button>
+            <button className={`tab-btn ${galleryFilter === 'rooms' ? 'active' : ''}`} onClick={() => setGalleryFilter('rooms')}>Rooms & Living</button>
+            <button className={`tab-btn ${galleryFilter === 'common' ? 'active' : ''}`} onClick={() => setGalleryFilter('common')}>Common Areas</button>
+            <button className={`tab-btn ${galleryFilter === 'amenities' ? 'active' : ''}`} onClick={() => setGalleryFilter('amenities')}>Facilities</button>
+          </div>
+
+          {/* Gallery Media Grid */}
+          <div className="gallery-grid">
+            {filteredGalleryItems.map((item, idx) => {
+              const originalIndex = galleryItems.findIndex(gItem => gItem.src === item.src)
+
+              if (item.type === 'video') {
+                return (
+                  <div key={idx} className="gallery-card video-card shadow-md" onClick={() => setLightboxIndex(originalIndex)}>
+                    <div className="video-thumbnail-wrapper">
+                      <video src={item.src} quiet="true" muted playsInline className="video-preview-thumbnail" />
+                      <div className="video-overlay-play">
+                        <div className="play-button-icon">
+                          <Play size={24} fill="var(--text-heading)" color="var(--text-heading)" />
+                        </div>
+                        <span className="play-duration">Video Tour</span>
+                      </div>
+                    </div>
+                    <div className="gallery-card-info">
+                      <h4>{item.title}</h4>
+                      <p>{item.desc}</p>
+                    </div>
+                  </div>
+                )
+              }
+
+              return (
+                <div key={idx} className="gallery-card shadow-md" onClick={() => setLightboxIndex(originalIndex)}>
+                  <div className="image-thumbnail-wrapper">
+                    <img src={item.src} alt={item.title} loading="lazy" className="gallery-image-thumbnail" />
+                  </div>
+                  <div className="gallery-card-info">
+                    <h4>{item.title}</h4>
+                    <p>{item.desc}</p>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* Amenities Section */}
-      <section id="amenities" className="section" style={{ backgroundColor: '#ffffff' }}>
+      <section id="amenities" className="section">
         <div className="container">
           <div className="section-header">
             <span className="section-label">Facilities Catalogue</span>
@@ -480,7 +598,7 @@ function App() {
             <div className="calc-panel">
               <h3 className="calc-title">Customize Your Outside Estimates</h3>
               <p className="calc-desc">Adjust the sliders to estimate what you would spend on your own outside of a fully inclusive package at Moonlight Hostel.</p>
-              
+
               <div className="calc-sliders">
                 {/* Sliders for Food */}
                 <div className="slider-group">
@@ -488,14 +606,14 @@ function App() {
                     <span>Monthly Food & Meals (Tiffin/Delivery)</span>
                     <span className="slider-val">₹{outsideMealCost.toLocaleString('en-IN')}/mo</span>
                   </div>
-                  <input 
-                    type="range" 
-                    min="3000" 
-                    max="10000" 
-                    step="500" 
-                    value={outsideMealCost} 
+                  <input
+                    type="range"
+                    min="3000"
+                    max="10000"
+                    step="500"
+                    value={outsideMealCost}
                     onChange={(e) => setOutsideMealCost(Number(e.target.value))}
-                    className="slider-input" 
+                    className="slider-input"
                   />
                   <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Typical high-quality outside tiffin/mess costs ₹5,000–₹8,000.</span>
                 </div>
@@ -506,14 +624,14 @@ function App() {
                     <span>Monthly Laundry & Ironing</span>
                     <span className="slider-val">₹{outsideLaundryCost.toLocaleString('en-IN')}/mo</span>
                   </div>
-                  <input 
-                    type="range" 
-                    min="500" 
-                    max="3000" 
-                    step="100" 
-                    value={outsideLaundryCost} 
+                  <input
+                    type="range"
+                    min="500"
+                    max="3000"
+                    step="100"
+                    value={outsideLaundryCost}
                     onChange={(e) => setOutsideLaundryCost(Number(e.target.value))}
-                    className="slider-input" 
+                    className="slider-input"
                   />
                   <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Calculated at average iron/wash charges per kg or local dhobi charges.</span>
                 </div>
@@ -524,14 +642,14 @@ function App() {
                     <span>Monthly Wi-Fi/Broadband Share</span>
                     <span className="slider-val">₹{outsideWifiCost.toLocaleString('en-IN')}/mo</span>
                   </div>
-                  <input 
-                    type="range" 
-                    min="400" 
-                    max="1500" 
-                    step="50" 
-                    value={outsideWifiCost} 
+                  <input
+                    type="range"
+                    min="400"
+                    max="1500"
+                    step="50"
+                    value={outsideWifiCost}
                     onChange={(e) => setOutsideWifiCost(Number(e.target.value))}
-                    className="slider-input" 
+                    className="slider-input"
                   />
                 </div>
 
@@ -541,14 +659,14 @@ function App() {
                     <span>Housekeeping & Sweeping Service</span>
                     <span className="slider-val">₹{outsideCleaningCost.toLocaleString('en-IN')}/mo</span>
                   </div>
-                  <input 
-                    type="range" 
-                    min="300" 
-                    max="2000" 
-                    step="100" 
-                    value={outsideCleaningCost} 
+                  <input
+                    type="range"
+                    min="300"
+                    max="2000"
+                    step="100"
+                    value={outsideCleaningCost}
                     onChange={(e) => setOutsideCleaningCost(Number(e.target.value))}
-                    className="slider-input" 
+                    className="slider-input"
                   />
                   <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Paying a maid to clean rooms and attached washrooms weekly.</span>
                 </div>
@@ -605,7 +723,7 @@ function App() {
                     High-quality included services matching standard values.
                   </div>
                 )}
-                
+
                 <button className="btn btn-accent" style={{ width: '100%' }} onClick={() => scrollTo('booking')}>
                   Lock In Yearly Plan <ArrowRight size={16} />
                 </button>
@@ -630,7 +748,7 @@ function App() {
               <p style={{ color: 'var(--text-main)', marginBottom: '20px' }}>
                 Moonlight Hostel offers a highly straightforward, annual transparent pricing package. There are no hidden monthly maintenance fees or surprise charges.
               </p>
-              
+
               <div className="card" style={{ padding: '24px', backgroundColor: 'var(--primary-ultra-light)', borderLeft: '4px solid var(--accent-color)' }}>
                 <h4 style={{ fontSize: '1.2rem', marginBottom: '8px', color: 'var(--text-heading)' }}>
                   ₹1,60,000 / Year <span style={{ fontSize: '0.85rem', fontWeight: 500, color: 'var(--text-main)' }}>(Double Sharing Room with Balcony)</span>
@@ -703,7 +821,7 @@ function App() {
             <div id="contact" className="booking-form-panel">
               <h3 style={{ fontSize: '1.75rem', marginBottom: '8px' }}>Request a Call Back</h3>
               <p style={{ color: 'var(--text-main)', marginBottom: '32px', fontSize: '0.9rem' }}>Fill in your contact details below, and our warden will call you back within 2 hours to answer any queries and confirm availability.</p>
-              
+
               {formSubmitted ? (
                 <div style={{ backgroundColor: 'var(--success-soft)', color: 'var(--success)', padding: '24px', borderRadius: 'var(--radius-md)', textAlign: 'center', fontWeight: 600 }}>
                   <CheckCircle2 size={32} style={{ margin: '0 auto 12px', display: 'block' }} />
@@ -713,66 +831,66 @@ function App() {
                 <form onSubmit={handleFormSubmit}>
                   <div className="form-group">
                     <label className="form-label" htmlFor="name">Student Name</label>
-                    <input 
-                      type="text" 
-                      id="name" 
-                      className="form-control" 
-                      required 
-                      placeholder="Enter full name" 
+                    <input
+                      type="text"
+                      id="name"
+                      className="form-control"
+                      required
+                      placeholder="Enter full name"
                       value={formData.name}
-                      onChange={(e) => setFormData({...formData, name: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       disabled={isSubmitting}
                     />
                   </div>
 
                   <div className="form-group">
                     <label className="form-label" htmlFor="phone">WhatsApp / Phone Number</label>
-                    <input 
-                      type="tel" 
-                      id="phone" 
-                      className="form-control" 
-                      required 
-                      placeholder="e.g. +91 98765 43210" 
+                    <input
+                      type="tel"
+                      id="phone"
+                      className="form-control"
+                      required
+                      placeholder="e.g. +91 98765 43210"
                       value={formData.phone}
-                      onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       disabled={isSubmitting}
                     />
                   </div>
 
                   <div className="form-group">
                     <label className="form-label" htmlFor="email">Email Address</label>
-                    <input 
-                      type="email" 
-                      id="email" 
-                      className="form-control" 
+                    <input
+                      type="email"
+                      id="email"
+                      className="form-control"
                       placeholder="e.g. student@domain.com"
                       value={formData.email}
-                      onChange={(e) => setFormData({...formData, email: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       disabled={isSubmitting}
                     />
                   </div>
 
                   <div className="form-group">
                     <label className="form-label" htmlFor="college">College / Institution</label>
-                    <input 
-                      type="text" 
-                      id="college" 
-                      className="form-control" 
+                    <input
+                      type="text"
+                      id="college"
+                      className="form-control"
                       value={formData.college}
-                      onChange={(e) => setFormData({...formData, college: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, college: e.target.value })}
                       disabled={isSubmitting}
                     />
                   </div>
 
                   <div className="form-group">
                     <label className="form-label" htmlFor="message">Message / Specific Requirements</label>
-                    <textarea 
-                      id="message" 
-                      rows="4" 
-                      className="form-control" 
+                    <textarea
+                      id="message"
+                      rows="4"
+                      className="form-control"
                       placeholder="Mention preferred move-in date or any questions..."
                       value={formData.message}
-                      onChange={(e) => setFormData({...formData, message: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       disabled={isSubmitting}
                     ></textarea>
                   </div>
@@ -793,11 +911,11 @@ function App() {
               {/* Direct WhatsApp Call CTA Button */}
               <div style={{ marginTop: '24px', textAlign: 'center' }}>
                 <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '12px' }}>Or chat directly for instant room assignment:</span>
-                <a 
-                  href="https://wa.me/919270132323?text=Hi%20Somnath,%20I'm%20interested%20in%20booking%20a%20double%20sharing%20room%20at%20Moonlight%20Hostel." 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="btn btn-accent" 
+                <a
+                  href="https://wa.me/919270132323?text=Hi%20Somnath,%20I'm%20interested%20in%20booking%20a%20double%20sharing%20room%20at%20Moonlight%20Hostel."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-accent"
                   style={{ width: '100%', backgroundColor: '#25d366', color: '#ffffff', borderColor: '#25d366' }}
                 >
                   <MessageSquare size={18} /> Chat on WhatsApp with Somnath
@@ -854,13 +972,13 @@ function App() {
 
             {/* Real Google Map Embed */}
             <div className="map-mockup shadow-lg">
-              <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d236.3194150083901!2d73.91477640792495!3d18.614092696003972!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2c692ed565e23%3A0x2c2a47070c0ebe05!2sJW77%2BJW4%2C%20Lane%20Number%206%2C%20Lohegaon%2C%20Pune%2C%20Maharashtra%20411047!5e0!3m2!1sen!2sin!4v1781172505631!5m2!1sen!2sin" 
-                width="100%" 
-                height="100%" 
-                style={{ border: 0 }} 
-                allowFullScreen="" 
-                loading="lazy" 
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d236.3194150083901!2d73.91477640792495!3d18.614092696003972!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2c692ed565e23%3A0x2c2a47070c0ebe05!2sJW77%2BJW4%2C%20Lane%20Number%206%2C%20Lohegaon%2C%20Pune%2C%20Maharashtra%20411047!5e0!3m2!1sen!2sin!4v1781172505631!5m2!1sen!2sin"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen=""
+                loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 title="Moonlight Hostel Google Map Location"
               ></iframe>
@@ -918,6 +1036,56 @@ function App() {
           </span>
         </div>
       </footer>
+
+      {/* Lightbox Modal Component */}
+      {lightboxIndex !== null && (
+        <div className="lightbox-overlay" onClick={() => setLightboxIndex(null)}>
+          <button className="lightbox-close" onClick={() => setLightboxIndex(null)} aria-label="Close Gallery">
+            <X size={28} />
+          </button>
+
+          <button
+            className="lightbox-nav prev"
+            onClick={(e) => { e.stopPropagation(); navigateLightbox(-1); }}
+            aria-label="Previous Media"
+          >
+            <ChevronLeft size={36} />
+          </button>
+
+          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+            {galleryItems[lightboxIndex].type === 'video' ? (
+              <video
+                src={galleryItems[lightboxIndex].src}
+                controls
+                autoPlay
+                className="lightbox-video"
+              />
+            ) : (
+              <img
+                src={galleryItems[lightboxIndex].src}
+                alt={galleryItems[lightboxIndex].title}
+                className="lightbox-img"
+              />
+            )}
+
+            <div className="lightbox-caption">
+              <span className="lightbox-counter">
+                {lightboxIndex + 1} / {galleryItems.length}
+              </span>
+              <h3>{galleryItems[lightboxIndex].title}</h3>
+              <p>{galleryItems[lightboxIndex].desc}</p>
+            </div>
+          </div>
+
+          <button
+            className="lightbox-nav next"
+            onClick={(e) => { e.stopPropagation(); navigateLightbox(1); }}
+            aria-label="Next Media"
+          >
+            <ChevronRight size={36} />
+          </button>
+        </div>
+      )}
     </>
   )
 }
