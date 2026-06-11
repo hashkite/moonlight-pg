@@ -363,7 +363,7 @@ function App() {
 
           <div className="hero-media animate-fade-in">
             <div className="hero-img-container">
-              <img src={roomImg} alt="Moonlight Hostel Premium Double Room with Balcony" />
+              <img src={roomImg} alt="Moonlight Hostel Premium Double Room with Balcony" fetchPriority="high" decoding="async" />
             </div>
 
             {/* Floating Card for micro-interaction/visual flair */}
@@ -434,7 +434,7 @@ function App() {
         <div className="container about-grid">
           <div className="hero-media" style={{ height: '480px' }}>
             <div className="hero-img-container" style={{ borderRadius: 'var(--radius-lg)' }}>
-              <img src={loungeImg} alt="Moonlight Hostel Recreation Lounge and TT Table" />
+              <img src={loungeImg} alt="Moonlight Hostel Recreation Lounge and TT Table" loading="lazy" decoding="async" />
             </div>
             <div className="floating-card glass-panel shadow-xl" style={{ top: '32px', right: '-32px', left: 'auto', bottom: 'auto' }}>
               <div className="about-bullet-icon" style={{ backgroundColor: 'var(--success-soft)', color: 'var(--success)' }}>
@@ -533,7 +533,7 @@ function App() {
               return (
                 <div key={idx} className="gallery-card shadow-md" onClick={() => setLightboxIndex(originalIndex)}>
                   <div className="image-thumbnail-wrapper">
-                    <img src={item.src} alt={item.title} loading="lazy" className="gallery-image-thumbnail" />
+                    <img src={item.src} alt={item.title} loading="lazy" decoding="async" className="gallery-image-thumbnail" />
                   </div>
                   <div className="gallery-card-info">
                     <h4>{item.title}</h4>
@@ -1065,6 +1065,7 @@ function App() {
                 src={galleryItems[lightboxIndex].src}
                 alt={galleryItems[lightboxIndex].title}
                 className="lightbox-img"
+                decoding="async"
               />
             )}
 
