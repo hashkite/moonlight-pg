@@ -790,7 +790,7 @@ function App() {
               </div>
 
               {/* Bank Account Details */}
-              <div className="bank-card">
+              {/* <div className="bank-card">
                 <h4>Official Payment Bank Account</h4>
                 <div className="bank-details-grid">
                   <div className="bank-detail-item">
@@ -814,7 +814,7 @@ function App() {
                     <span className="bank-detail-val">Lohegaon, Pune</span>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             {/* Quick Contact Form */}
