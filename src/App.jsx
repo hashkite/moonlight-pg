@@ -87,7 +87,7 @@ function App() {
       }
 
       // Determine active section on scroll
-      const sections = ['home', 'about', 'gallery', 'amenities', 'calculator', 'booking', 'contact']
+      const sections = ['home', 'about', 'gallery', 'amenities', 'booking', 'contact']
       const scrollPosition = window.scrollY + 120
 
       for (const section of sections) {
@@ -282,7 +282,6 @@ function App() {
             <a href="#about" className={`nav-link ${activeSection === 'about' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('about'); }}>About Us</a>
             <a href="#gallery" className={`nav-link ${activeSection === 'gallery' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('gallery'); }}>Gallery</a>
             <a href="#amenities" className={`nav-link ${activeSection === 'amenities' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('amenities'); }}>Amenities</a>
-            <a href="#calculator" className={`nav-link ${activeSection === 'calculator' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('calculator'); }}>Rent Calculator</a>
             <a href="#booking" className={`nav-link ${activeSection === 'booking' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('booking'); }}>Booking info</a>
             <a href="#contact" className={`nav-link ${activeSection === 'contact' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('contact'); }}>Contact</a>
           </div>
@@ -309,7 +308,6 @@ function App() {
           <a href="#about" className={`nav-link ${activeSection === 'about' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('about'); }}>About Us</a>
           <a href="#gallery" className={`nav-link ${activeSection === 'gallery' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('gallery'); }}>Gallery</a>
           <a href="#amenities" className={`nav-link ${activeSection === 'amenities' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('amenities'); }}>Amenities</a>
-          <a href="#calculator" className={`nav-link ${activeSection === 'calculator' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('calculator'); }}>Rent Calculator</a>
           <a href="#booking" className={`nav-link ${activeSection === 'booking' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('booking'); }}>Booking info</a>
           <a href="#contact" className={`nav-link ${activeSection === 'contact' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('contact'); }}>Contact</a>
           <button className="btn btn-accent btn-sm" onClick={() => scrollTo('booking')} style={{ marginTop: '12px' }}>
@@ -585,154 +583,6 @@ function App() {
         </div>
       </section>
 
-      {/* Rent & Value Calculator Section */}
-      <section id="calculator" className="section">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-label">Cost Comparison</span>
-            <h2 className="section-title">See The Absolute Value of Comfort</h2>
-            <p>A simple PG room might look cheaper upfront, but once you add meal subscriptions, laundry services, broadband Wi-Fi, electricity back-ups, and housekeeping, the bills stack up fast. Calculate your actual savings here.</p>
-          </div>
-
-          <div className="calc-container">
-            <div className="calc-panel">
-              <h3 className="calc-title">Customize Your Outside Estimates</h3>
-              <p className="calc-desc">Adjust the sliders to estimate what you would spend on your own outside of a fully inclusive package at Moonlight Hostel.</p>
-
-              <div className="calc-sliders">
-                {/* Sliders for Food */}
-                <div className="slider-group">
-                  <div className="slider-header">
-                    <span>Monthly Food & Meals (Tiffin/Delivery)</span>
-                    <span className="slider-val">₹{outsideMealCost.toLocaleString('en-IN')}/mo</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="3000"
-                    max="10000"
-                    step="500"
-                    value={outsideMealCost}
-                    onChange={(e) => setOutsideMealCost(Number(e.target.value))}
-                    className="slider-input"
-                  />
-                  <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Typical high-quality outside tiffin/mess costs ₹5,000–₹8,000.</span>
-                </div>
-
-                {/* Laundry */}
-                <div className="slider-group">
-                  <div className="slider-header">
-                    <span>Monthly Laundry & Ironing</span>
-                    <span className="slider-val">₹{outsideLaundryCost.toLocaleString('en-IN')}/mo</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="500"
-                    max="3000"
-                    step="100"
-                    value={outsideLaundryCost}
-                    onChange={(e) => setOutsideLaundryCost(Number(e.target.value))}
-                    className="slider-input"
-                  />
-                  <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Calculated at average iron/wash charges per kg or local dhobi charges.</span>
-                </div>
-
-                {/* Wi-Fi */}
-                <div className="slider-group">
-                  <div className="slider-header">
-                    <span>Monthly Wi-Fi/Broadband Share</span>
-                    <span className="slider-val">₹{outsideWifiCost.toLocaleString('en-IN')}/mo</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="400"
-                    max="1500"
-                    step="50"
-                    value={outsideWifiCost}
-                    onChange={(e) => setOutsideWifiCost(Number(e.target.value))}
-                    className="slider-input"
-                  />
-                </div>
-
-                {/* Cleaning */}
-                <div className="slider-group">
-                  <div className="slider-header">
-                    <span>Housekeeping & Sweeping Service</span>
-                    <span className="slider-val">₹{outsideCleaningCost.toLocaleString('en-IN')}/mo</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="300"
-                    max="2000"
-                    step="100"
-                    value={outsideCleaningCost}
-                    onChange={(e) => setOutsideCleaningCost(Number(e.target.value))}
-                    className="slider-input"
-                  />
-                  <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Paying a maid to clean rooms and attached washrooms weekly.</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="calc-breakdown">
-              <div>
-                <h3 className="breakdown-title">Monthly Cost Breakdown</h3>
-                <div className="breakdown-list">
-                  <div className="breakdown-item">
-                    <span>Basic Room Rent (2-sharing)</span>
-                    <span className="breakdown-value">₹{outsideRentCost.toLocaleString('en-IN')}</span>
-                  </div>
-                  <div className="breakdown-item">
-                    <span>Hygienic Food Subscription</span>
-                    <span className="breakdown-value">₹{outsideMealCost.toLocaleString('en-IN')}</span>
-                  </div>
-                  <div className="breakdown-item">
-                    <span>Laundry Bills</span>
-                    <span className="breakdown-value">₹{outsideLaundryCost.toLocaleString('en-IN')}</span>
-                  </div>
-                  <div className="breakdown-item">
-                    <span>Broadband Wi-Fi bills</span>
-                    <span className="breakdown-value">₹{outsideWifiCost.toLocaleString('en-IN')}</span>
-                  </div>
-                  <div className="breakdown-item">
-                    <span>Cleaning & Sweeping</span>
-                    <span className="breakdown-value">₹{outsideCleaningCost.toLocaleString('en-IN')}</span>
-                  </div>
-                  <div className="breakdown-item total">
-                    <span>Total Outside Monthly Est.</span>
-                    <span className="breakdown-value" style={{ color: 'var(--text-heading)' }}>
-                      ₹{totalOutsideMonthly.toLocaleString('en-IN')}
-                    </span>
-                  </div>
-                  <div className="breakdown-item total" style={{ borderTop: 'none', paddingTop: 0 }}>
-                    <span>Moonlight Hostel Total Included</span>
-                    <span className="breakdown-value" style={{ color: 'var(--accent-color)' }}>
-                      ₹{moonlightHostelTotalIncluded.toLocaleString('en-IN')}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                {monthlySavings > 0 ? (
-                  <div className="breakdown-saving">
-                    🎉 You save ₹{monthlySavings.toLocaleString('en-IN')} / month! <br />
-                    (₹{yearlySavings.toLocaleString('en-IN')} yearly savings)
-                  </div>
-                ) : (
-                  <div className="breakdown-saving" style={{ backgroundColor: 'var(--primary-ultra-light)', color: 'var(--text-heading)' }}>
-                    High-quality included services matching standard values.
-                  </div>
-                )}
-
-                <button className="btn btn-accent" style={{ width: '100%' }} onClick={() => scrollTo('booking')}>
-                  Lock In Yearly Plan <ArrowRight size={16} />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Booking and Bank Details Section */}
       <section id="booking" className="section" style={{ backgroundColor: '#ffffff' }}>
         <div className="container">
@@ -751,7 +601,7 @@ function App() {
 
               <div className="card" style={{ padding: '24px', backgroundColor: 'var(--primary-ultra-light)', borderLeft: '4px solid var(--accent-color)' }}>
                 <h4 style={{ fontSize: '1.2rem', marginBottom: '8px', color: 'var(--text-heading)' }}>
-                  ₹1,60,000 / Year <span style={{ fontSize: '0.85rem', fontWeight: 500, color: 'var(--text-main)' }}>(Double Sharing Room with Balcony)</span>
+                  ₹1,40,000 - ₹1,60,000 / Year <span style={{ fontSize: '0.85rem', fontWeight: 500, color: 'var(--text-main)' }}>(Double Sharing Room)</span>
                 </h4>
                 <p style={{ fontSize: '0.9rem', color: 'var(--text-main)' }}>
                   Includes premium double-sharing furnishings, high-speed Wi-Fi, 24/7 power backup, daily room housekeeping, free laundry service, attached washrooms, and daily meals (Breakfast + Dinner on weekdays, 3 full meals on weekends).
@@ -1002,7 +852,6 @@ function App() {
               <li><a href="#home" className="footer-link" onClick={(e) => { e.preventDefault(); scrollTo('home'); }}>Home Page</a></li>
               <li><a href="#about" className="footer-link" onClick={(e) => { e.preventDefault(); scrollTo('about'); }}>About Facilities</a></li>
               <li><a href="#amenities" className="footer-link" onClick={(e) => { e.preventDefault(); scrollTo('amenities'); }}>All Amenities</a></li>
-              <li><a href="#calculator" className="footer-link" onClick={(e) => { e.preventDefault(); scrollTo('calculator'); }}>Rent Value Calculator</a></li>
               <li><a href="#booking" className="footer-link" onClick={(e) => { e.preventDefault(); scrollTo('booking'); }}>Payment & Booking</a></li>
             </ul>
           </div>
