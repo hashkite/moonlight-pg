@@ -23,10 +23,17 @@ import {
   Mail,
   ChevronLeft,
   ChevronRight,
-  Play
+  Play,
+  Moon,
+  Star
 } from 'lucide-react'
-import roomImg from './assets/moonlight-pg.png'
+import heroBg from './assets/moonlight-hostel-hero.png'
 import loungeImg from './assets/lounge.jpg'
+import PrivacyPage from './components/PrivacyPage'
+import TermsPage from './components/TermsPage'
+import BoysPgLohegaon from './components/BoysPgLohegaon'
+import HostelNearDyPatil from './components/HostelNearDyPatil'
+import ContactPage from './components/ContactPage'
 
 const galleryItems = [
   { type: 'video', src: '/VN20260609_185218.mp4', category: 'videos', title: 'Moonlight Walkthrough Tour', desc: 'Take a virtual video tour of our brand new premium hostel building and amenities.' },
@@ -51,6 +58,72 @@ function App() {
   const [activeSection, setActiveSection] = useState('home')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+
+  // Custom router state
+  const [currentPath, setCurrentPath] = useState(window.location.pathname)
+
+  useEffect(() => {
+    const handleLocationChange = () => {
+      setCurrentPath(window.location.pathname)
+    }
+    window.addEventListener('popstate', handleLocationChange)
+    return () => window.removeEventListener('popstate', handleLocationChange)
+  }, [])
+
+  // Update document title programmatically on navigation for SPA UX
+  useEffect(() => {
+    const path = currentPath.toLowerCase()
+    if (path.includes('privacy')) {
+      document.title = "Privacy Policy | Moonlight Hostel & PG Pune"
+    } else if (path.includes('terms')) {
+      document.title = "Terms and Conditions & Rules | Moonlight Hostel Pune"
+    } else if (path.includes('contact')) {
+      document.title = "Contact Us | Moonlight Hostel & PG Lohegaon Pune"
+    } else if (path.includes('boys-pg-lohegaon')) {
+      document.title = "Premium Boys PG in Lohegaon, Pune | Moonlight Hostel & PG"
+    } else if (path.includes('hostel-near-dy-patil-pune')) {
+      document.title = "Premium Hostel near D.Y. Patil University Pune | Moonlight Hostel"
+    } else {
+      document.title = "Moonlight Hostel & PG | Premium Boys' Hostel near DY Patil University, Lohegaon, Pune"
+    }
+  }, [currentPath])
+
+  const navigateTo = (path, scrollToSection = null) => {
+    setMobileMenuOpen(false)
+    window.history.pushState({}, '', path)
+    setCurrentPath(path)
+    if (scrollToSection) {
+      setTimeout(() => {
+        const el = document.getElementById(scrollToSection)
+        if (el) {
+          window.scrollTo({
+            top: el.offsetTop - 80,
+            behavior: 'smooth'
+          })
+          setActiveSection(scrollToSection)
+        }
+      }, 150)
+    } else {
+      window.scrollTo(0, 0)
+    }
+  }
+
+  const handleNavLinkClick = (e, path, section = null) => {
+    e.preventDefault()
+    if (path === '/' || path === '/index.html' || path === '/index') {
+      if (currentPath === '/' || currentPath === '/index.html' || currentPath === '/index') {
+        if (section) {
+          scrollTo(section)
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+        }
+      } else {
+        navigateTo('/', section)
+      }
+    } else {
+      navigateTo(path)
+    }
+  }
 
   // Amenities category filter state
   const [activeCategory, setActiveCategory] = useState('all')
@@ -106,6 +179,27 @@ function App() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  // Scroll-reveal IntersectionObserver
+  useEffect(() => {
+    const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale')
+    if (!revealElements.length) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+    )
+
+    revealElements.forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [currentPath])
 
   // Smooth scroll helper
   const scrollTo = (id) => {
@@ -266,28 +360,39 @@ function App() {
     ? galleryItems
     : galleryItems.filter(item => item.category === galleryFilter)
 
+  const isSubpage = currentPath !== '/' && currentPath !== '/index.html' && currentPath !== '/index'
+  const isNavbarScrolled = scrolled || isSubpage
+
+  const getNavLinkClass = (section, path = '/') => {
+    if (isSubpage) {
+      if (path === currentPath) return 'nav-link active'
+      return 'nav-link'
+    }
+    return `nav-link ${activeSection === section ? 'active' : ''}`
+  }
+
   return (
     <>
       {/* Navigation Header */}
-      <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+      <nav className={`navbar ${isNavbarScrolled ? 'scrolled' : ''}`}>
         <div className="container nav-container">
-          <a href="#home" className="logo" onClick={(e) => { e.preventDefault(); scrollTo('home'); }}>
-            <span className="logo-icon">M</span>
+          <a href="/" className="logo" onClick={(e) => handleNavLinkClick(e, '/', 'home')}>
+            <span className="logo-icon"><Moon size={18} fill="currentColor" /></span>
             <span>Moonlight Hostel</span>
           </a>
 
           {/* Desktop Links */}
           <div className="nav-links desktop-nav">
-            <a href="#home" className={`nav-link ${activeSection === 'home' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('home'); }}>Home</a>
-            <a href="#about" className={`nav-link ${activeSection === 'about' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('about'); }}>About Us</a>
-            <a href="#gallery" className={`nav-link ${activeSection === 'gallery' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('gallery'); }}>Gallery</a>
-            <a href="#amenities" className={`nav-link ${activeSection === 'amenities' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('amenities'); }}>Amenities</a>
-            <a href="#booking" className={`nav-link ${activeSection === 'booking' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('booking'); }}>Booking info</a>
-            <a href="#contact" className={`nav-link ${activeSection === 'contact' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('contact'); }}>Contact</a>
+            <a href="/" className={getNavLinkClass('home', '/')} onClick={(e) => handleNavLinkClick(e, '/', 'home')}>Home</a>
+            <a href="/#about" className={getNavLinkClass('about', '/#about')} onClick={(e) => handleNavLinkClick(e, '/', 'about')}>About Us</a>
+            <a href="/#gallery" className={getNavLinkClass('gallery', '/#gallery')} onClick={(e) => handleNavLinkClick(e, '/', 'gallery')}>Gallery</a>
+            <a href="/#amenities" className={getNavLinkClass('amenities', '/#amenities')} onClick={(e) => handleNavLinkClick(e, '/', 'amenities')}>Amenities</a>
+            <a href="/#booking" className={getNavLinkClass('booking', '/#booking')} onClick={(e) => handleNavLinkClick(e, '/', 'booking')}>Booking info</a>
+            <a href="/contact" className={getNavLinkClass('contact', '/contact')} onClick={(e) => handleNavLinkClick(e, '/contact')}>Contact</a>
           </div>
 
           <div className="nav-cta">
-            <button className="btn btn-accent btn-sm" onClick={() => scrollTo('booking')}>
+            <button className="btn btn-accent btn-sm" onClick={(e) => handleNavLinkClick(e, '/', 'booking')}>
               <CheckCircle2 size={16} /> Book Room
             </button>
           </div>
@@ -304,42 +409,53 @@ function App() {
 
         {/* Mobile Navigation Dropdown */}
         <div className={`mobile-nav ${mobileMenuOpen ? 'open' : ''}`}>
-          <a href="#home" className={`nav-link ${activeSection === 'home' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('home'); }}>Home</a>
-          <a href="#about" className={`nav-link ${activeSection === 'about' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('about'); }}>About Us</a>
-          <a href="#gallery" className={`nav-link ${activeSection === 'gallery' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('gallery'); }}>Gallery</a>
-          <a href="#amenities" className={`nav-link ${activeSection === 'amenities' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('amenities'); }}>Amenities</a>
-          <a href="#booking" className={`nav-link ${activeSection === 'booking' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('booking'); }}>Booking info</a>
-          <a href="#contact" className={`nav-link ${activeSection === 'contact' ? 'active' : ''}`} onClick={(e) => { e.preventDefault(); scrollTo('contact'); }}>Contact</a>
-          <button className="btn btn-accent btn-sm" onClick={() => scrollTo('booking')} style={{ marginTop: '12px' }}>
+          <a href="/" className={getNavLinkClass('home', '/')} onClick={(e) => handleNavLinkClick(e, '/', 'home')}>Home</a>
+          <a href="/#about" className={getNavLinkClass('about', '/#about')} onClick={(e) => handleNavLinkClick(e, '/', 'about')}>About Us</a>
+          <a href="/#gallery" className={getNavLinkClass('gallery', '/#gallery')} onClick={(e) => handleNavLinkClick(e, '/', 'gallery')}>Gallery</a>
+          <a href="/#amenities" className={getNavLinkClass('amenities', '/#amenities')} onClick={(e) => handleNavLinkClick(e, '/', 'amenities')}>Amenities</a>
+          <a href="/#booking" className={getNavLinkClass('booking', '/#booking')} onClick={(e) => handleNavLinkClick(e, '/', 'booking')}>Booking info</a>
+          <a href="/contact" className={getNavLinkClass('contact', '/contact')} onClick={(e) => handleNavLinkClick(e, '/contact')}>Contact</a>
+          <button className="btn btn-accent btn-sm" onClick={(e) => handleNavLinkClick(e, '/', 'booking')} style={{ marginTop: '12px' }}>
             Book Room Now
           </button>
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section id="home" className="hero-wrapper">
+      {isSubpage ? (
+        <div style={{ minHeight: 'calc(100vh - var(--nav-height) - 300px)' }}>
+          {(currentPath.toLowerCase().includes('privacy.html') || currentPath.toLowerCase().includes('/privacy') || currentPath.toLowerCase() === 'privacy') && <PrivacyPage />}
+          {(currentPath.toLowerCase().includes('terms.html') || currentPath.toLowerCase().includes('/terms') || currentPath.toLowerCase() === 'terms') && <TermsPage />}
+          {(currentPath.toLowerCase().includes('contact.html') || currentPath.toLowerCase().includes('/contact') || currentPath.toLowerCase() === 'contact') && <ContactPage />}
+          {(currentPath.toLowerCase().includes('boys-pg-lohegaon.html') || currentPath.toLowerCase().includes('/boys-pg-lohegaon') || currentPath.toLowerCase() === 'boys-pg-lohegaon') && <BoysPgLohegaon />}
+          {(currentPath.toLowerCase().includes('hostel-near-dy-patil-pune.html') || currentPath.toLowerCase().includes('/hostel-near-dy-patil-pune') || currentPath.toLowerCase() === 'hostel-near-dy-patil-pune') && <HostelNearDyPatil />}
+        </div>
+      ) : (
+        <>
+          {/* Hero Section */}
+      <section id="home" className="hero-wrapper" style={{ backgroundImage: `url(${heroBg})` }}>
+        <div className="hero-overlay"></div>
         <div className="container hero-grid">
-          <div className="hero-content animate-fade-in">
+          <div className="hero-glass-card">
             <div className="hero-tagline">
-              <Sparkles size={16} className="gradient-text-accent" />
+              <Sparkles size={14} />
               <span>Brand New Building for the 2026 Academic Year</span>
             </div>
 
             <h1 className="hero-title">
-              Premium Boys' Coliving <br />
-              <span className="gradient-text-accent">Coliving That Feels Like Home</span>
+              Your Perfect Study <br />
+              <span>Environment Awaits</span>
             </h1>
 
             <p className="hero-desc">
-              Experience the perfect balance of study and comfort. Located on <strong>D.Y. Patil University Road, Lohegaon, Pune</strong>, we offer highly premium double-occupancy rooms with private balconies, nutritious dining, laundry, and multi-tier biometric security. Designed only for college students.
+              Comfortable rooms, peaceful study spaces, high-speed Wi-Fi, and a secure environment designed for students.
             </p>
 
             <div className="hero-actions">
-              <button className="btn btn-primary" onClick={() => scrollTo('amenities')}>
-                Explore Amenities <ArrowRight size={18} />
+              <button className="btn btn-primary" onClick={() => scrollTo('booking')}>
+                Book Your Room <ArrowRight size={18} />
               </button>
-              <button className="btn btn-secondary" onClick={() => scrollTo('booking')}>
-                Check Pricing
+              <button className="btn btn-secondary" onClick={() => scrollTo('amenities')}>
+                Explore Facilities
               </button>
             </div>
 
@@ -350,7 +466,7 @@ function App() {
               </div>
               <div className="stat-item">
                 <span className="stat-val">50 Max</span>
-                <span className="stat-lbl">Capped Student Capacity</span>
+                <span className="stat-lbl">Student Capacity</span>
               </div>
               <div className="stat-item">
                 <span className="stat-val">1:1</span>
@@ -358,36 +474,20 @@ function App() {
               </div>
             </div>
           </div>
-
-          <div className="hero-media animate-fade-in">
-            <div className="hero-img-container">
-              <img src={roomImg} alt="Moonlight Hostel Premium Double Room with Balcony" fetchPriority="high" decoding="async" />
-            </div>
-
-            {/* Floating Card for micro-interaction/visual flair */}
-            <div className="floating-card glass-panel shadow-xl">
-              <div className="about-bullet-icon">
-                <Shield size={20} />
-              </div>
-              <div>
-                <h4 style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-heading)' }}>Biometric Secured</h4>
-                <p style={{ fontSize: '0.8rem', color: 'var(--text-main)' }}>24/7 Peace of Mind for Parents</p>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="section" style={{ backgroundColor: '#ffffff' }}>
+      <section className="section bg-alt-gradient" style={{ position: 'relative' }}>
+        <div className="glow-backdrop" style={{ top: '20%', right: '10%' }}></div>
         <div className="container">
-          <div className="section-header">
+          <div className="section-header reveal">
             <span className="section-label">Why Choose Us</span>
             <h2 className="section-title">An Infrastructure Designed for Student Growth</h2>
             <p>We believe a hostel shouldn't just be a place to sleep. It should provide a seamless environment that supports your academic achievements, personal health, and recreation.</p>
           </div>
 
-          <div className="features-grid">
+          <div className="features-grid reveal">
             {/* Feature 1 */}
             <div className="card feat-card">
               <div className="feat-icon-box">
@@ -428,14 +528,15 @@ function App() {
       </section>
 
       {/* About Us Section */}
-      <section id="about" className="section">
+      <section id="about" className="section bg-main-gradient" style={{ position: 'relative' }}>
+        <div className="glow-backdrop" style={{ bottom: '20%', left: '10%' }}></div>
         <div className="container about-grid">
-          <div className="hero-media" style={{ height: '480px' }}>
+          <div className="hero-media reveal-left" style={{ height: '480px' }}>
             <div className="hero-img-container" style={{ borderRadius: 'var(--radius-lg)' }}>
               <img src={loungeImg} alt="Moonlight Hostel Recreation Lounge and TT Table" loading="lazy" decoding="async" />
             </div>
             <div className="floating-card glass-panel shadow-xl" style={{ top: '32px', right: '-32px', left: 'auto', bottom: 'auto' }}>
-              <div className="about-bullet-icon" style={{ backgroundColor: 'var(--success-soft)', color: 'var(--success)' }}>
+              <div className="about-bullet-icon" style={{ backgroundColor: 'var(--secondary-soft)', color: 'var(--secondary-accent)' }}>
                 <Gamepad2 size={20} />
               </div>
               <div>
@@ -445,14 +546,14 @@ function App() {
             </div>
           </div>
 
-          <div className="about-content">
+          <div className="about-content reveal-right">
             <span className="section-label">About Moonlight Hostel</span>
             <h2 className="section-title">A Welcoming Community & Premium Living Standard</h2>
             <p style={{ marginBottom: '20px' }}>
-              Moonlight Hostel is managed with one core principle: creating a **"home away from home"** for young minds pursuing their dreams in Pune. Founded in 2026, our brand new building offers college students a sanctuary that eliminates the daily hassles of housekeeping, laundry, and search for healthy food.
+              Moonlight Hostel is managed with one core principle: creating a <strong>"home away from home"</strong> for young minds pursuing their dreams in Pune. Founded in 2026, our brand new building offers college students a sanctuary that eliminates the daily hassles of housekeeping, laundry, and search for healthy food.
             </p>
             <p style={{ marginBottom: '24px' }}>
-              We limit our total capacity to just **50 students** to ensure that our dining, common areas, and amenities are never overcrowded. This cozy layout fosters a vibrant community of like-minded students, encouraging peer learning and lasting friendships.
+              We limit our total capacity to just <strong>50 students</strong> to ensure that our dining, common areas, and amenities are never overcrowded. This cozy layout fosters a vibrant community of like-minded students, encouraging peer learning and lasting friendships.
             </p>
 
             <div className="about-bullets">
@@ -486,9 +587,10 @@ function App() {
       </section>
 
       {/* Photo & Video Gallery Section */}
-      <section id="gallery" className="section" style={{ backgroundColor: '#ffffff' }}>
+      <section id="gallery" className="section bg-alt-gradient" style={{ position: 'relative' }}>
+        <div className="glow-backdrop" style={{ top: '30%', left: '15%' }}></div>
         <div className="container">
-          <div className="section-header">
+          <div className="section-header reveal">
             <span className="section-label">Media Tour</span>
             <h2 className="section-title">Take a Visual Tour of Moonlight Hostel</h2>
             <p>Explore our premium rooms, clean dining space, common areas, and high-quality amenities. Watch the walkthrough video to see the real campus coliving experience.</p>
@@ -545,9 +647,10 @@ function App() {
       </section>
 
       {/* Amenities Section */}
-      <section id="amenities" className="section">
+      <section id="amenities" className="section bg-main-gradient" style={{ position: 'relative' }}>
+        <div className="glow-backdrop" style={{ top: '40%', right: '15%' }}></div>
         <div className="container">
-          <div className="section-header">
+          <div className="section-header reveal">
             <span className="section-label">Facilities Catalogue</span>
             <h2 className="section-title">Fully Equipped For Modern Living</h2>
             <p>Every small detail has been curated so you can focus entirely on your college curriculum and project work. Review our complete catalogue below.</p>
@@ -583,24 +686,164 @@ function App() {
         </div>
       </section>
 
-      {/* Booking and Bank Details Section */}
-      <section id="booking" className="section" style={{ backgroundColor: '#ffffff' }}>
+      {/* Room Types Section */}
+      <section id="rooms" className="section bg-alt-gradient" style={{ position: 'relative' }}>
+        <div className="glow-backdrop" style={{ top: '10%', left: '5%' }}></div>
         <div className="container">
-          <div className="section-header">
+          <div className="section-header reveal">
+            <span className="section-label">Room Choices</span>
+            <h2 className="section-title" style={{ color: '#ffffff' }}>Premium Room Options</h2>
+            <p style={{ color: 'var(--text-main)' }}>Select the room style that best fits your study lifestyle. Both options feature dedicated workstations and balcony configurations.</p>
+          </div>
+
+          <div className="features-grid reveal" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px' }}>
+            {/* Room 1 */}
+            <div className="card" style={{ padding: '0', overflow: 'hidden', display: 'flex', flexDirection: 'column', border: '1px solid rgba(255, 255, 255, 0.12)' }}>
+              <div style={{ height: '240px', overflow: 'hidden', position: 'relative' }}>
+                <img src="/photos/IMG_6663.JPG" alt="Premium Balcony Double Sharing Room" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <span className="section-label" style={{ position: 'absolute', top: '20px', left: '20px', backgroundColor: 'var(--accent-color)', color: 'var(--primary)', padding: '6px 12px', borderRadius: 'var(--radius-sm)', fontWeight: '700', fontSize: '0.8rem' }}>POPULAR</span>
+              </div>
+              <div style={{ padding: '32px' }}>
+                <h3 style={{ fontSize: '1.4rem', marginBottom: '8px', color: '#ffffff' }}>Balcony Double Sharing</h3>
+                <p style={{ fontSize: '0.9rem', color: 'var(--text-main)', marginBottom: '24px' }}>
+                  Spacious premium room featuring a private attached balcony, individual ergonomic study desks, and high-capacity storage.
+                </p>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '24px' }}>
+                  <span style={{ fontSize: '1.85rem', fontWeight: '800', color: 'var(--accent-color)' }}>₹1,60,000</span>
+                  <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>/ Year (All Included)</span>
+                </div>
+                <ul style={{ listStyle: 'none', padding: '0', margin: '0 0 32px 0', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.9rem', color: 'var(--text-main)' }}>
+                  <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><CheckCircle2 size={16} color="var(--accent-color)" /> Private Attached Balcony</li>
+                  <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><CheckCircle2 size={16} color="var(--accent-color)" /> Dedicated 1:1 Study Station</li>
+                  <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><CheckCircle2 size={16} color="var(--accent-color)" /> Dual Lockable Wardrobe Cabinets</li>
+                  <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><CheckCircle2 size={16} color="var(--accent-color)" /> Heavy-duty Washroom Geyser</li>
+                </ul>
+                <button className="btn btn-primary" onClick={() => scrollTo('booking')} style={{ width: '100%' }}>Book This Room</button>
+              </div>
+            </div>
+
+            {/* Room 2 */}
+            <div className="card" style={{ padding: '0', overflow: 'hidden', display: 'flex', flexDirection: 'column', border: '1px solid rgba(255, 255, 255, 0.12)' }}>
+              <div style={{ height: '240px', overflow: 'hidden', position: 'relative' }}>
+                <img src="/photos/IMG_6670.JPG" alt="Standard Double Sharing Room" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+              <div style={{ padding: '32px' }}>
+                <h3 style={{ fontSize: '1.4rem', marginBottom: '8px', color: '#ffffff' }}>Standard Double Sharing</h3>
+                <p style={{ fontSize: '0.9rem', color: 'var(--text-main)', marginBottom: '24px' }}>
+                  Optimized study-centric room featuring twin custom beds, side-by-side study setups, and dedicated storage cupboards.
+                </p>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '24px' }}>
+                  <span style={{ fontSize: '1.85rem', fontWeight: '800', color: 'var(--accent-color)' }}>₹1,40,000</span>
+                  <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>/ Year (All Included)</span>
+                </div>
+                <ul style={{ listStyle: 'none', padding: '0', margin: '0 0 32px 0', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.9rem', color: 'var(--text-main)' }}>
+                  <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><CheckCircle2 size={16} color="var(--accent-color)" /> Side-by-Side Study Workspace</li>
+                  <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><CheckCircle2 size={16} color="var(--accent-color)" /> Custom Compact Cupboards</li>
+                  <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><CheckCircle2 size={16} color="var(--accent-color)" /> High-Speed Wi-Fi & Generator Backup</li>
+                  <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><CheckCircle2 size={16} color="var(--accent-color)" /> Daily Housekeeping Access</li>
+                </ul>
+                <button className="btn btn-secondary" onClick={() => scrollTo('booking')} style={{ width: '100%' }}>Book This Room</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section id="testimonials" className="section bg-main-gradient" style={{ position: 'relative' }}>
+        <div className="glow-backdrop" style={{ bottom: '10%', right: '5%' }}></div>
+        <div className="container">
+          <div className="section-header reveal">
+            <span className="section-label">Reviews</span>
+            <h2 className="section-title" style={{ color: '#ffffff' }}>What Our Students Say</h2>
+            <p style={{ color: 'var(--text-main)' }}>Read experiences from students living at Moonlight Hostel studying near D.Y. Patil University.</p>
+          </div>
+
+          <div className="features-grid reveal" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
+            {/* Card 1 */}
+            <div className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', border: '1px solid rgba(255, 255, 255, 0.12)' }}>
+              <div>
+                <div style={{ display: 'flex', gap: '4px', marginBottom: '16px' }}>
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={16} color="var(--accent-color)" fill="var(--accent-color)" />
+                  ))}
+                </div>
+                <p style={{ fontStyle: 'italic', fontSize: '0.95rem', color: '#ffffff', marginBottom: '24px', lineHeight: '1.6' }}>
+                  "The individual study desk and silent hours are a blessing. My productivity has shot up since moving here! Best hostel in Lohegaon."
+                </p>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '16px' }}>
+                <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: 'var(--secondary)', color: '#ffffff', display: 'flex', alignItems: 'center', justifyItems: 'center', justifyContent: 'center', fontWeight: '700', fontSize: '0.95rem' }}>AS</div>
+                <div>
+                  <h4 style={{ fontSize: '0.95rem', color: '#ffffff', fontWeight: '700' }}>Aman Sharma</h4>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>D.Y. Patil CS Student</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 2 */}
+            <div className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', border: '1px solid rgba(255, 255, 255, 0.12)' }}>
+              <div>
+                <div style={{ display: 'flex', gap: '4px', marginBottom: '16px' }}>
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={16} color="var(--accent-color)" fill="var(--accent-color)" />
+                  ))}
+                </div>
+                <p style={{ fontStyle: 'italic', fontSize: '0.95rem', color: '#ffffff', marginBottom: '24px', lineHeight: '1.6' }}>
+                  "Biometric entry and the warden's support make my parents feel completely safe. Food is also exactly like home, fresh and hot."
+                </p>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '16px' }}>
+                <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: 'var(--secondary)', color: '#ffffff', display: 'flex', alignItems: 'center', justifyItems: 'center', justifyContent: 'center', fontWeight: '700', fontSize: '0.95rem' }}>RM</div>
+                <div>
+                  <h4 style={{ fontSize: '0.95rem', color: '#ffffff', fontWeight: '700' }}>Rohan Mehta</h4>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Mechanical Engg. Student</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 3 */}
+            <div className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', border: '1px solid rgba(255, 255, 255, 0.12)' }}>
+              <div>
+                <div style={{ display: 'flex', gap: '4px', marginBottom: '16px' }}>
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={16} color="var(--accent-color)" fill="var(--accent-color)" />
+                  ))}
+                </div>
+                <p style={{ fontStyle: 'italic', fontSize: '0.95rem', color: '#ffffff', marginBottom: '24px', lineHeight: '1.6' }}>
+                  "The high-speed Wi-Fi and 24/7 power backup mean I never miss a coding deadline. Absolutely recommend it for engineering students."
+                </p>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '16px' }}>
+                <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: 'var(--secondary)', color: '#ffffff', display: 'flex', alignItems: 'center', justifyItems: 'center', justifyContent: 'center', fontWeight: '700', fontSize: '0.95rem' }}>SG</div>
+                <div>
+                  <h4 style={{ fontSize: '0.95rem', color: '#ffffff', fontWeight: '700' }}>Siddharth Goel</h4>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>IT Student</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Booking and Bank Details Section */}
+      <section id="booking" className="section bg-alt-gradient">
+        <div className="container">
+          <div className="section-header reveal">
             <span className="section-label">Reservations</span>
             <h2 className="section-title">Simple Booking & Value Structure</h2>
             <p>Secure your room for the upcoming batch. Double sharing rooms with balconies are booked on a first-come, first-serve basis following standard university rules.</p>
           </div>
 
-          <div className="booking-grid">
+          <div className="booking-grid reveal">
             <div className="booking-info-panel">
               <h3>Pricing & Inclusions</h3>
               <p style={{ color: 'var(--text-main)', marginBottom: '20px' }}>
                 Moonlight Hostel offers a highly straightforward, annual transparent pricing package. There are no hidden monthly maintenance fees or surprise charges.
               </p>
 
-              <div className="card" style={{ padding: '24px', backgroundColor: 'var(--primary-ultra-light)', borderLeft: '4px solid var(--accent-color)' }}>
-                <h4 style={{ fontSize: '1.2rem', marginBottom: '8px', color: 'var(--text-heading)' }}>
+              <div className="card" style={{ padding: '24px', backgroundColor: 'rgba(255, 255, 255, 0.05)', borderLeft: '4px solid var(--accent-color)', borderTop: '1px solid rgba(255, 255, 255, 0.08)', borderRight: '1px solid rgba(255, 255, 255, 0.08)', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: 'var(--radius-md)' }}>
+                <h4 style={{ fontSize: '1.2rem', marginBottom: '8px', color: '#ffffff' }}>
                   ₹1,40,000 - ₹1,60,000 / Year <span style={{ fontSize: '0.85rem', fontWeight: 500, color: 'var(--text-main)' }}>(Double Sharing Room)</span>
                 </h4>
                 <p style={{ fontSize: '0.9rem', color: 'var(--text-main)' }}>
@@ -667,109 +910,47 @@ function App() {
               </div> */}
             </div>
 
-            {/* Quick Contact Form */}
-            <div id="contact" className="booking-form-panel">
-              <h3 style={{ fontSize: '1.75rem', marginBottom: '8px' }}>Request a Call Back</h3>
-              <p style={{ color: 'var(--text-main)', marginBottom: '32px', fontSize: '0.9rem' }}>Fill in your contact details below, and our warden will call you back within 2 hours to answer any queries and confirm availability.</p>
+            {/* Direct Booking & Support Info Panel */}
+            <div id="contact" className="booking-form-panel" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '40px' }}>
+              <h3 style={{ fontSize: '1.75rem', marginBottom: '12px', color: '#ffffff' }}>Direct Booking & Support</h3>
+              <p style={{ color: 'var(--text-main)', marginBottom: '32px', fontSize: '0.95rem', lineHeight: 1.6 }}>
+                Skip the forms! Connect directly with our representatives for instant room bookings, virtual tours, availability status, or fee clarifications.
+              </p>
 
-              {formSubmitted ? (
-                <div style={{ backgroundColor: 'var(--success-soft)', color: 'var(--success)', padding: '24px', borderRadius: 'var(--radius-md)', textAlign: 'center', fontWeight: 600 }}>
-                  <CheckCircle2 size={32} style={{ margin: '0 auto 12px', display: 'block' }} />
-                  Thank you! We have received your query. Somnath Bhalsing or the warden will get in touch on WhatsApp/Call shortly.
-                </div>
-              ) : (
-                <form onSubmit={handleFormSubmit}>
-                  <div className="form-group">
-                    <label className="form-label" htmlFor="name">Student Name</label>
-                    <input
-                      type="text"
-                      id="name"
-                      className="form-control"
-                      required
-                      placeholder="Enter full name"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      disabled={isSubmitting}
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label className="form-label" htmlFor="phone">WhatsApp / Phone Number</label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      className="form-control"
-                      required
-                      placeholder="e.g. +91 98765 43210"
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      disabled={isSubmitting}
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label className="form-label" htmlFor="email">Email Address</label>
-                    <input
-                      type="email"
-                      id="email"
-                      className="form-control"
-                      placeholder="e.g. student@domain.com"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      disabled={isSubmitting}
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label className="form-label" htmlFor="college">College / Institution</label>
-                    <input
-                      type="text"
-                      id="college"
-                      className="form-control"
-                      value={formData.college}
-                      onChange={(e) => setFormData({ ...formData, college: e.target.value })}
-                      disabled={isSubmitting}
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label className="form-label" htmlFor="message">Message / Specific Requirements</label>
-                    <textarea
-                      id="message"
-                      rows="4"
-                      className="form-control"
-                      placeholder="Mention preferred move-in date or any questions..."
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      disabled={isSubmitting}
-                    ></textarea>
-                  </div>
-
-                  <button type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={isSubmitting}>
-                    {isSubmitting ? 'Sending Request...' : 'Submit Callback Request'}
-                    {!isSubmitting && <ArrowRight size={18} />}
-                  </button>
-
-                  {submitError && (
-                    <div style={{ color: '#ef4444', backgroundColor: 'rgba(239, 68, 68, 0.1)', padding: '12px', borderRadius: 'var(--radius-sm)', marginTop: '16px', fontSize: '0.875rem', fontWeight: 500, textAlign: 'center' }}>
-                      ⚠️ {submitError}
-                    </div>
-                  )}
-                </form>
-              )}
-
-              {/* Direct WhatsApp Call CTA Button */}
-              <div style={{ marginTop: '24px', textAlign: 'center' }}>
-                <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', marginBottom: '12px' }}>Or chat directly for instant room assignment:</span>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '32px' }}>
                 <a
                   href="https://wa.me/919270132323?text=Hi%20Somnath,%20I'm%20interested%20in%20booking%20a%20double%20sharing%20room%20at%20Moonlight%20Hostel."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-accent"
-                  style={{ width: '100%', backgroundColor: '#25d366', color: '#ffffff', borderColor: '#25d366' }}
+                  style={{ width: '100%', backgroundColor: '#25d366', color: '#ffffff', borderColor: '#25d366', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', height: '48px', fontSize: '1rem', fontWeight: 600 }}
                 >
-                  <MessageSquare size={18} /> Chat on WhatsApp with Somnath
+                  <MessageSquare size={20} /> Chat on WhatsApp
                 </a>
+
+                <a
+                  href="tel:+919270132323"
+                  className="btn btn-secondary"
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', height: '48px', fontSize: '1rem', fontWeight: 600, border: '1px solid rgba(255, 255, 255, 0.2)' }}
+                >
+                  <Phone size={18} /> Call Representative (+91 92701 32323)
+                </a>
+              </div>
+
+              <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '24px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+                  <div className="about-bullet-icon" style={{ backgroundColor: 'var(--secondary-soft)', color: 'var(--secondary-accent)', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <UserCheck size={16} />
+                  </div>
+                  <span style={{ fontSize: '0.9rem', color: 'var(--text-main)' }}><strong>Resident Warden:</strong> Somnath Bhalsing available 24/7 on-site</span>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <div className="about-bullet-icon" style={{ backgroundColor: 'var(--secondary-soft)', color: 'var(--secondary-accent)', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Shield size={16} />
+                  </div>
+                  <span style={{ fontSize: '0.9rem', color: 'var(--text-main)' }}><strong>Secure Environment:</strong> Biometric verification for new assignments</span>
+                </div>
               </div>
             </div>
           </div>
@@ -777,15 +958,15 @@ function App() {
       </section>
 
       {/* Location / Proximity Section */}
-      <section className="section" style={{ backgroundColor: '#f8fafc', borderTop: '1px solid var(--border)' }}>
+      <section className="section bg-main-gradient" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
         <div className="container">
-          <div className="section-header">
+          <div className="section-header reveal">
             <span className="section-label">Prime Location</span>
             <h2 className="section-title">Minutes from Campus, Close to Everything</h2>
             <p>Enjoy Lohegaon's peaceful environment while staying close to classrooms, cafes, grocery stores, and local transport networks.</p>
           </div>
 
-          <div className="location-grid">
+          <div className="location-grid reveal">
             <div>
               <h3 style={{ fontSize: '1.5rem', marginBottom: '16px' }}>Address Details</h3>
               <p style={{ fontSize: '1.05rem', color: 'var(--text-heading)', fontWeight: 600, marginBottom: '8px' }}>
@@ -799,7 +980,7 @@ function App() {
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <div className="about-bullet-icon" style={{ backgroundColor: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6' }}>
+                  <div className="about-bullet-icon" style={{ backgroundColor: 'var(--secondary-soft)', color: 'var(--secondary)' }}>
                     <MapPin size={16} />
                   </div>
                   <div>
@@ -809,7 +990,7 @@ function App() {
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <div className="about-bullet-icon" style={{ backgroundColor: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6' }}>
+                  <div className="about-bullet-icon" style={{ backgroundColor: 'var(--secondary-soft)', color: 'var(--secondary)' }}>
                     <Clock size={16} />
                   </div>
                   <div>
@@ -836,6 +1017,8 @@ function App() {
           </div>
         </div>
       </section>
+      </>
+      )}
 
       {/* Footer */}
       <footer className="footer">
@@ -849,10 +1032,13 @@ function App() {
           <div className="footer-links-col">
             <h4>Quick Links</h4>
             <ul className="footer-links-list">
-              <li><a href="#home" className="footer-link" onClick={(e) => { e.preventDefault(); scrollTo('home'); }}>Home Page</a></li>
-              <li><a href="#about" className="footer-link" onClick={(e) => { e.preventDefault(); scrollTo('about'); }}>About Facilities</a></li>
-              <li><a href="#amenities" className="footer-link" onClick={(e) => { e.preventDefault(); scrollTo('amenities'); }}>All Amenities</a></li>
-              <li><a href="#booking" className="footer-link" onClick={(e) => { e.preventDefault(); scrollTo('booking'); }}>Payment & Booking</a></li>
+              <li><a href="/" className="footer-link" onClick={(e) => handleNavLinkClick(e, '/', 'home')}>Home Page</a></li>
+              <li><a href="/#about" className="footer-link" onClick={(e) => handleNavLinkClick(e, '/', 'about')}>About Facilities</a></li>
+              <li><a href="/#amenities" className="footer-link" onClick={(e) => handleNavLinkClick(e, '/', 'amenities')}>All Amenities</a></li>
+              <li><a href="/#booking" className="footer-link" onClick={(e) => handleNavLinkClick(e, '/', 'booking')}>Payment & Booking</a></li>
+              <li><a href="/boys-pg-lohegaon" className="footer-link" onClick={(e) => handleNavLinkClick(e, '/boys-pg-lohegaon')}>PG in Lohegaon</a></li>
+              <li><a href="/hostel-near-dy-patil-pune" className="footer-link" onClick={(e) => handleNavLinkClick(e, '/hostel-near-dy-patil-pune')}>Hostel near DY Patil</a></li>
+              <li><a href="/contact" className="footer-link" onClick={(e) => handleNavLinkClick(e, '/contact')}>Contact Us</a></li>
             </ul>
           </div>
 
@@ -879,9 +1065,12 @@ function App() {
 
         <div className="container footer-bottom">
           <span>&copy; {new Date().getFullYear()} Moonlight Hostel. All Rights Reserved. Designed for D.Y. Patil Students.</span>
-          <span style={{ display: 'flex', gap: '24px' }}>
+          <span style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
             <a href="https://forms.gle/82tYE6cUqCWuKfyD9" target="_blank" rel="noopener noreferrer" className="footer-link">Online Admission Form</a>
-            <a href="#booking" className="footer-link" onClick={(e) => { e.preventDefault(); scrollTo('booking'); }}>Bank Transfer Info</a>
+            <a href="#booking" className="footer-link" onClick={(e) => handleNavLinkClick(e, '/', 'booking')}>Bank Transfer Info</a>
+            <a href="/privacy" className="footer-link" onClick={(e) => handleNavLinkClick(e, '/privacy')}>Privacy Policy</a>
+            <a href="/terms" className="footer-link" onClick={(e) => handleNavLinkClick(e, '/terms')}>Terms & Conditions</a>
+            <a href="/contact" className="footer-link" onClick={(e) => handleNavLinkClick(e, '/contact')}>Contact Us</a>
           </span>
         </div>
       </footer>
