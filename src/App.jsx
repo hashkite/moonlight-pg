@@ -376,7 +376,38 @@ function App() {
       <nav className={`navbar ${isNavbarScrolled ? 'scrolled' : ''}`}>
         <div className="container nav-container">
           <a href="/" className="logo" onClick={(e) => handleNavLinkClick(e, '/', 'home')}>
-            <span className="logo-icon"><Moon size={18} fill="currentColor" /></span>
+            <span className="logo-icon">
+              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="logoBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#0A1020" />
+                    <stop offset="100%" stop-color="#111B33" />
+                  </linearGradient>
+                  <linearGradient id="logoMoonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#FDE047" />
+                    <stop offset="70%" stop-color="#FBBF24" />
+                    <stop offset="100%" stop-color="#F59E0B" />
+                  </linearGradient>
+                  <linearGradient id="logoBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#60A5FA" />
+                    <stop offset="100%" stop-color="#3B82F6" />
+                  </linearGradient>
+                  <filter id="logoGlow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="0.8" result="blur" />
+                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                  </filter>
+                </defs>
+                <circle cx="18" cy="18" r="17" fill="url(#logoBgGrad)" stroke="rgba(251, 191, 36, 0.15)" strokeWidth="1" />
+                <circle cx="18" cy="18" r="11" fill="url(#logoMoonGrad)" filter="url(#logoGlow)" />
+                <circle cx="13" cy="13" r="1.5" fill="#D97706" opacity="0.15" />
+                <circle cx="23" cy="12" r="2.2" fill="#D97706" opacity="0.12" />
+                <circle cx="24" cy="21" r="1.4" fill="#D97706" opacity="0.15" />
+                <circle cx="14" cy="23" r="2" fill="#D97706" opacity="0.12" />
+                <path d="M12.5 20.5 L18 15 L23.5 20.5 V27.5 H12.5 Z" fill="url(#logoBlueGrad)" opacity="0.95" />
+                <path d="M16.5 27.5 V24.5 H19.5 V27.5" stroke="#0A1020" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M17.5 18 L18 17.5 L18.5 18" stroke="#FFFFFF" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </span>
             <span>Moonlight Hostel</span>
           </a>
 
@@ -1061,15 +1092,27 @@ function App() {
           </div>
         </div>
 
-        <div className="container footer-bottom">
-          <span>&copy; {new Date().getFullYear()} Moonlight Hostel. All Rights Reserved. Designed for D.Y. Patil Students.</span>
-          <span style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
-            <a href="https://forms.gle/82tYE6cUqCWuKfyD9" target="_blank" rel="noopener noreferrer" className="footer-link">Online Admission Form</a>
-            <a href="#booking" className="footer-link" onClick={(e) => handleNavLinkClick(e, '/', 'booking')}>Bank Transfer Info</a>
-            <a href="/privacy" className="footer-link" onClick={(e) => handleNavLinkClick(e, '/privacy')}>Privacy Policy</a>
-            <a href="/terms" className="footer-link" onClick={(e) => handleNavLinkClick(e, '/terms')}>Terms & Conditions</a>
-            <a href="/contact" className="footer-link" onClick={(e) => handleNavLinkClick(e, '/contact')}>Contact Us</a>
-          </span>
+        <div className="container footer-bottom" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px', width: '100%' }}>
+            <span>&copy; {new Date().getFullYear()} Moonlight Hostel. All Rights Reserved. Designed for D.Y. Patil Students.</span>
+            <span style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
+              <a href="https://forms.gle/82tYE6cUqCWuKfyD9" target="_blank" rel="noopener noreferrer" className="footer-link">Online Admission Form</a>
+              <a href="#booking" className="footer-link" onClick={(e) => handleNavLinkClick(e, '/', 'booking')}>Bank Transfer Info</a>
+              <a href="/privacy" className="footer-link" onClick={(e) => handleNavLinkClick(e, '/privacy')}>Privacy Policy</a>
+              <a href="/terms" className="footer-link" onClick={(e) => handleNavLinkClick(e, '/terms')}>Terms & Conditions</a>
+              <a href="/contact" className="footer-link" onClick={(e) => handleNavLinkClick(e, '/contact')}>Contact Us</a>
+            </span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+            <span>Share Moonlight Hostel on:</span>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://moonlighthostels.com" target="_blank" rel="noopener noreferrer" className="footer-link" style={{ textDecoration: 'underline' }}>Facebook</a>
+            <span>•</span>
+            <a href="https://twitter.com/intent/tweet?url=https://moonlighthostels.com&text=Moonlight%20Hostel%20-%20Premium%20Boys%20Hostel%20in%20Lohegaon,%20Pune" target="_blank" rel="noopener noreferrer" className="footer-link" style={{ textDecoration: 'underline' }}>Twitter / X</a>
+            <span>•</span>
+            <a href="https://api.whatsapp.com/send?text=Check%20out%20Moonlight%20Hostel%20-%20Premium%20Boys%20Hostel%20in%20Lohegaon,%20Pune:%20https://moonlighthostels.com" target="_blank" rel="noopener noreferrer" className="footer-link" style={{ textDecoration: 'underline' }}>WhatsApp</a>
+            <span>•</span>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://moonlighthostels.com" target="_blank" rel="noopener noreferrer" className="footer-link" style={{ textDecoration: 'underline' }}>LinkedIn</a>
+          </div>
         </div>
       </footer>
 
