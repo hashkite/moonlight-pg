@@ -1,5 +1,15 @@
 RewriteEngine On
 
-# Serve all other files from dist folder
-RewriteCond %{REQUEST_URI} !^/dist/
-RewriteRule ^(.*)$ dist/$1 [L]
+# 1. If it's a request to root (/), serve dist/index.html
+RewriteRule ^$ dist/index.html [L]
+
+# 2. If the request is already to /dist/, do nothing
+RewriteCond %{REQUEST_URI} ^/dist/
+RewriteRule ^ - [L]
+
+# 3. If a clean URL (no extension) is requested, and dist/name.html exists, rewrite to dist/name.html
+RewriteCond %{DOCUMENT_ROOT}/dist/$1.html -f
+RewriteRule ^([^/.]+)/?$ dist/$1.html [L,QSA]
+
+# 4. Rewrite all other requests to the dist/ folder
+RewriteRule ^(.*)$ dist/$1 [L,QSA]
