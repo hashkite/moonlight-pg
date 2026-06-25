@@ -75,15 +75,15 @@ function App() {
     if (path.includes('privacy')) {
       document.title = "Privacy Policy | Moonlight Hostel & PG Pune"
     } else if (path.includes('terms')) {
-      document.title = "Terms and Conditions & Rules | Moonlight Hostel Pune"
+      document.title = "Terms & Rules | Moonlight Hostel Pune"
     } else if (path.includes('contact')) {
-      document.title = "Contact Us | Moonlight Hostel & PG Lohegaon Pune"
+      document.title = "Contact Us | Moonlight Hostel & PG Lohegaon"
     } else if (path.includes('boys-pg-lohegaon')) {
-      document.title = "Premium Boys PG in Lohegaon, Pune | Moonlight Hostel & PG"
+      document.title = "Premium Boys PG in Lohegaon | Moonlight Hostel"
     } else if (path.includes('hostel-near-dy-patil-pune')) {
-      document.title = "Premium Hostel near D.Y. Patil University Pune | Moonlight Hostel"
+      document.title = "Hostel near D.Y. Patil Pune | Moonlight Hostel"
     } else {
-      document.title = "Moonlight Hostel & PG | Premium Boys' Hostel near DY Patil University, Lohegaon, Pune"
+      document.title = "Moonlight Hostel & PG | Boys' Hostel Lohegaon"
     }
   }, [currentPath])
 
