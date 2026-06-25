@@ -4,23 +4,23 @@ export default function HostelNearDyPatil() {
   return (
     <div>
       {/* Hero / Introduction Page Section */}
-      <section className="seo-page-hero" style={{ padding: '140px 0 80px 0', background: 'linear-gradient(135deg, var(--bg-main) 0%, var(--bg-card) 100%)', position: 'relative', overflow: 'hidden' }}>
+      <section className="seo-page-hero" style={{ background: 'linear-gradient(135deg, var(--bg-main) 0%, var(--bg-card) 100%)', position: 'relative', overflow: 'hidden' }}>
         <div className="glow-backdrop" style={{ top: '10%', right: '5%' }}></div>
         <div className="container">
           <div className="seo-grid">
             <div>
               <span className="section-label">Strategic Student Housing</span>
-              <h1 className="seo-title" style={{ fontSize: '3rem', lineHeight: 1.2, color: '#ffffff', marginBottom: '20px' }}>
+              <h1 className="seo-title">
                 Premium <span style={{ color: 'var(--accent-color)' }}>Hostel near D.Y. Patil University</span>, Pune
               </h1>
-              <p className="seo-subtitle" style={{ fontSize: '1.15rem', color: 'var(--text-main)', marginBottom: '32px', lineHeight: 1.6 }}>
-                Staying close to campus shouldn't mean compromising on study environment quality. Located just 1.2 km from D.Y. Patil University (DYPU) Lohegaon campus, Moonlight Hostel is a brand new building specifically optimized for student success.
+              <p className="seo-subtitle">
+                Staying close to campus shouldn't mean compromising on study environment quality. Located just 6 Minutes Walking Distance from D.Y. Patil University (DYPU) Lohegaon campus, Moonlight Hostel is a brand new building specifically optimized for student success.
               </p>
 
               <div style={{ marginBottom: '32px' }}>
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', marginBottom: '16px' }}>
                   <span style={{ color: 'var(--accent-color)', flexShrink: 0, marginTop: '3px' }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
                   </span>
                   <div>
                     <strong style={{ color: '#ffffff' }}>Daily Campus Shuttle Support:</strong> Optional doorstep vehicle support ensuring quick transport to the university campus.
@@ -28,7 +28,7 @@ export default function HostelNearDyPatil() {
                 </div>
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', marginBottom: '16px' }}>
                   <span style={{ color: 'var(--accent-color)', flexShrink: 0, marginTop: '3px' }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
                   </span>
                   <div>
                     <strong style={{ color: '#ffffff' }}>24/7 DG Power Backup:</strong> Uninterrupted study schedules! Heavy-duty generator keeps Wi-Fi, fans, lights, and study areas online even during grid outages.
@@ -36,7 +36,7 @@ export default function HostelNearDyPatil() {
                 </div>
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', marginBottom: '16px' }}>
                   <span style={{ color: 'var(--accent-color)', flexShrink: 0, marginTop: '3px' }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
                   </span>
                   <div>
                     <strong style={{ color: '#ffffff' }}>1:1 Student-to-Desk Ratio:</strong> No workspace sharing. Enjoy a dedicated table, high-back ergonomic chair, and private lights to review course lectures in comfort.
@@ -46,8 +46,9 @@ export default function HostelNearDyPatil() {
 
               <a href="/#booking" className="btn btn-primary" onClick={(e) => {
                 e.preventDefault();
-                window.location.hash = '#booking';
-              }}>Book Your Room Now</a>
+                window.history.pushState({}, '', '/#booking');
+                window.dispatchEvent(new PopStateEvent('popstate'));
+              }}>Book Your Space Now</a>
             </div>
 
             <div>
@@ -79,7 +80,7 @@ export default function HostelNearDyPatil() {
             <p>Avoid standard rental headaches and focus on your engineering, management, or academic course goals.</p>
           </div>
 
-          <div className="grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
+          <div className="seo-cards-grid">
             <div className="card glass-panel" style={{ padding: '28px' }}>
               <h3 style={{ color: '#ffffff', fontSize: '1.25rem', marginBottom: '12px' }}>Hot Water & Comfort</h3>
               <p style={{ color: 'var(--text-main)', fontSize: '0.95rem', lineHeight: 1.6 }}>Equipped with heavy-duty geysers for clean hot water. Rooms feature premium remote-controlled fans and custom block-out designer curtains for better night rest.</p>

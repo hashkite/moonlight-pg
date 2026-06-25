@@ -69,6 +69,41 @@ function App() {
     return () => window.removeEventListener('popstate', handleLocationChange)
   }, [])
 
+  // Handle scroll to hash (e.g., #about, #booking) on load, hash change, or popstate navigation
+  useEffect(() => {
+    const handleHashScroll = () => {
+      if (window.location.hash) {
+        const hash = window.location.hash.replace('#', '')
+        setTimeout(() => {
+          const el = document.getElementById(hash)
+          if (el) {
+            window.scrollTo({
+              top: el.offsetTop - 80,
+              behavior: 'smooth'
+            })
+            // Only update active section if it's one of the main page sections
+            const validSections = ['home', 'about', 'gallery', 'amenities', 'rooms', 'testimonials', 'booking']
+            if (validSections.includes(hash)) {
+              setActiveSection(hash)
+            }
+          }
+        }, 150)
+      }
+    }
+
+    // Run on mount
+    handleHashScroll()
+
+    // Listen to browser hash changes & navigation
+    window.addEventListener('hashchange', handleHashScroll)
+    window.addEventListener('popstate', handleHashScroll)
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashScroll)
+      window.removeEventListener('popstate', handleHashScroll)
+    }
+  }, [currentPath])
+
   // Update document title programmatically on navigation for SPA UX
   useEffect(() => {
     const path = currentPath.toLowerCase()
@@ -89,7 +124,8 @@ function App() {
 
   const navigateTo = (path, scrollToSection = null) => {
     setMobileMenuOpen(false)
-    window.history.pushState({}, '', path)
+    const fullPath = (scrollToSection && scrollToSection !== 'home') ? `${path}#${scrollToSection}` : path
+    window.history.pushState({}, '', fullPath)
     setCurrentPath(path)
     if (scrollToSection) {
       setTimeout(() => {
@@ -115,6 +151,7 @@ function App() {
           scrollTo(section)
         } else {
           window.scrollTo({ top: 0, behavior: 'smooth' })
+          window.history.pushState({}, '', '/')
         }
       } else {
         navigateTo('/', section)
@@ -210,10 +247,15 @@ function App() {
         behavior: 'smooth'
       })
       setActiveSection(id)
+      if (id === 'home') {
+        window.history.pushState({}, '', '/')
+      } else {
+        window.history.pushState({}, '', `#${id}`)
+      }
     }
   }
 
-  // Amenities Data
+  // Amenities Data 
   const amenitiesList = [
     // Living Essentials
     { id: 1, name: 'Attached Western Washroom', desc: 'Private attached washrooms with a clean 1:2 student-to-washroom ratio.', category: 'living', icon: Shield },
@@ -423,7 +465,7 @@ function App() {
 
           <div className="nav-cta">
             <button className="btn btn-accent btn-sm" onClick={(e) => handleNavLinkClick(e, '/', 'booking')}>
-              <CheckCircle2 size={16} /> Book Room
+              <CheckCircle2 size={16} /> Book Your Space
             </button>
           </div>
 
@@ -482,7 +524,7 @@ function App() {
 
                 <div className="hero-actions">
                   <button className="btn btn-primary" onClick={() => scrollTo('booking')}>
-                    Book Your Room <ArrowRight size={18} />
+                    Book Your Space <ArrowRight size={18} />
                   </button>
                   <button className="btn btn-secondary" onClick={() => scrollTo('amenities')}>
                     Explore Facilities
@@ -491,8 +533,8 @@ function App() {
 
                 <div className="hero-stats">
                   <div className="stat-item">
-                    <span className="stat-val">1.2 km</span>
-                    <span className="stat-lbl">From D.Y. Patil University</span>
+                    <span className="stat-val">6 min</span>
+                    <span className="stat-lbl"> Walking Distance<br />From D.Y. Patil University</span>
                   </div>
                   <div className="stat-item">
                     <span className="stat-val">50 Max</span>
@@ -726,7 +768,7 @@ function App() {
                 <p style={{ color: 'var(--text-main)' }}>Select the room style that best fits your study lifestyle. Both options feature dedicated workstations and balcony configurations.</p>
               </div>
 
-              <div className="features-grid reveal" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px' }}>
+              <div className="features-grid rooms-grid reveal">
                 {/* Room 1 */}
                 <div className="card" style={{ padding: '0', overflow: 'hidden', display: 'flex', flexDirection: 'column', border: '1px solid rgba(255, 255, 255, 0.12)' }}>
                   <div style={{ height: '240px', overflow: 'hidden', position: 'relative' }}>
@@ -789,7 +831,7 @@ function App() {
                 <p style={{ color: 'var(--text-main)' }}>Read experiences from students living at Moonlight Hostel studying near D.Y. Patil University.</p>
               </div>
 
-              <div className="features-grid reveal" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
+              <div className="features-grid testimonials-grid reveal">
                 {/* Card 1 */}
                 <div className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', border: '1px solid rgba(255, 255, 255, 0.12)' }}>
                   <div>
@@ -1102,16 +1144,6 @@ function App() {
               <a href="/terms" className="footer-link" onClick={(e) => handleNavLinkClick(e, '/terms')}>Terms & Conditions</a>
               <a href="/contact" className="footer-link" onClick={(e) => handleNavLinkClick(e, '/contact')}>Contact Us</a>
             </span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-            <span>Share Moonlight Hostel on:</span>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=https://moonlighthostels.com" target="_blank" rel="noopener noreferrer" className="footer-link" style={{ textDecoration: 'underline' }}>Facebook</a>
-            <span>•</span>
-            <a href="https://twitter.com/intent/tweet?url=https://moonlighthostels.com&text=Moonlight%20Hostel%20-%20Premium%20Boys%20Hostel%20in%20Lohegaon,%20Pune" target="_blank" rel="noopener noreferrer" className="footer-link" style={{ textDecoration: 'underline' }}>Twitter / X</a>
-            <span>•</span>
-            <a href="https://api.whatsapp.com/send?text=Check%20out%20Moonlight%20Hostel%20-%20Premium%20Boys%20Hostel%20in%20Lohegaon,%20Pune:%20https://moonlighthostels.com" target="_blank" rel="noopener noreferrer" className="footer-link" style={{ textDecoration: 'underline' }}>WhatsApp</a>
-            <span>•</span>
-            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://moonlighthostels.com" target="_blank" rel="noopener noreferrer" className="footer-link" style={{ textDecoration: 'underline' }}>LinkedIn</a>
           </div>
         </div>
       </footer>
