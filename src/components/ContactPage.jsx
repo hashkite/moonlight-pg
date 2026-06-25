@@ -11,7 +11,7 @@ import {
 
 export default function ContactPage() {
   return (
-    <section className="contact-wrapper" style={{ padding: '120px 0 80px 0', minHeight: 'calc(100vh - var(--nav-height) - 300px)', backgroundColor: 'var(--bg-main)' }}>
+    <section className="contact-wrapper" style={{ minHeight: 'calc(100vh - var(--nav-height) - 300px)', backgroundColor: 'var(--bg-main)' }}>
       <div className="container">
         <div className="card glass-panel" style={{ padding: '48px', borderRadius: 'var(--radius-lg)' }}>
           <span className="section-label">Get in Touch</span>
@@ -20,7 +20,7 @@ export default function ContactPage() {
             Have questions about room availability, amenities, fees, or booking procedure? Reach out to us, and our team will assist you.
           </p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', alignItems: 'start' }} className="contact-grid-layout">
+          <div className="contact-grid-layout">
             
             {/* Left Column: Contact Details & Map */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
