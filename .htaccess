@@ -1,15 +1,43 @@
 RewriteEngine On
 
-# 1. If it's a request to root (/), serve dist/index.html
+# 1. Redirect HTTP to HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# 2. Redirect www to non-www
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^(.*)$ https://%1%{REQUEST_URI} [R=301,L]
+
+# 3. If it's a request to root (/), serve dist/index.html
 RewriteRule ^$ dist/index.html [L]
 
-# 2. If the request is already to /dist/, do nothing
+# 4. If the request is already to /dist/, do nothing
 RewriteCond %{REQUEST_URI} ^/dist/
 RewriteRule ^ - [L]
 
-# 3. If a clean URL (no extension) is requested, and dist/name.html exists, rewrite to dist/name.html
+# 5. If a clean URL (no extension) is requested, and dist/name.html exists, rewrite to dist/name.html
 RewriteCond %{DOCUMENT_ROOT}/dist/$1.html -f
 RewriteRule ^([^/.]+)/?$ dist/$1.html [L,QSA]
 
-# 4. Rewrite all other requests to the dist/ folder
+# 6. Rewrite all other requests to the dist/ folder
 RewriteRule ^(.*)$ dist/$1 [L,QSA]
+
+# 7. Enable Gzip Compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml image/svg+xml
+</IfModule>
+
+# 8. Leverage Browser Caching
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 month"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType text/javascript "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType video/mp4 "access plus 1 year"
+</IfModule>
