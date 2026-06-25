@@ -39,13 +39,12 @@ const galleryItems = [
   { type: 'video', src: '/VN20260609_185218.mp4', category: 'videos', title: 'Moonlight Walkthrough Tour', desc: 'Take a virtual video tour of our brand new premium hostel building and amenities.' },
   { type: 'image', src: '/photos/building_exterior.jpg', category: 'common', title: 'Moonlight Hostel Facade', desc: 'Modern elevation and premium gated entry of our brand new hostel building.' },
   { type: 'image', src: '/photos/IMG_6685.JPG', category: 'common', title: 'Serene Welcoming Lobby', desc: 'A peaceful entrance lobby featuring a beautiful Ganesha idol installation.' },
-  { type: 'image', src: '/photos/IMG_6594.JPG', category: 'common', title: 'Balcony Chess Lounge', desc: 'Fresh air balcony space featuring a chess table for student recreation.' },
-  { type: 'image', src: '/photos/IMG_6595.JPG', category: 'common', title: 'Balcony Carrom Zone', desc: 'Relax and engage in friendly carrom matches in our spacious outdoor balcony.' },
+  { type: 'image', src: '/photos/IMG_6594.JPG', category: 'common', title: 'Chess Lounge', desc: 'A comfortable recreational space featuring a chess table, designed for relaxation and friendly competition.' },
+  { type: 'image', src: '/photos/IMG_6595.JPG', category: 'common', title: 'Carrom Zone', desc: 'Relax and enjoy friendly carrom matches in a comfortable recreational space designed for students.' },
   { type: 'image', src: '/photos/IMG_6606.JPG', category: 'common', title: 'Study & Dining Hall', desc: 'Spacious common lounge tables ideal for group study sessions and dining.' },
   { type: 'image', src: '/photos/IMG_6663.JPG', category: 'rooms', title: 'Premium Double Sharing Room', desc: 'Beautifully furnished bedroom layout with comfortable orthopedic bedding.' },
   { type: 'image', src: '/photos/IMG_6667.JPG', category: 'rooms', title: 'Personal Wardrobe Space', desc: 'Large, secure, lockable wardrobe cabinets for organized student storage.' },
   { type: 'image', src: '/photos/IMG_6670.JPG', category: 'rooms', title: 'Executive Double Bed Layout', desc: 'Fully equipped rooms showing side-by-side study tables and premium beds.' },
-  { type: 'image', src: '/photos/IMG_6672.JPG', category: 'rooms', title: 'Personal Workstation Close-up', desc: 'Ergonomic study desk with adequate lighting and power points next to the bed.' },
   { type: 'image', src: '/photos/IMG_6673.JPG', category: 'rooms', title: 'Dedicated Study Station', desc: 'Individual study desks designed to boost focus and productivity.' },
   { type: 'image', src: '/photos/IMG_6678.JPG', category: 'rooms', title: 'Comfort Double Sharing Room', desc: 'Well-ventilated, premium-grade double sharing bedroom with private balcony access.' },
   { type: 'image', src: '/photos/IMG_6664.JPG', category: 'amenities', title: 'Modern Attached Bathroom', desc: 'Equipped with a high-capacity geyser and premium shower fixtures.' },
@@ -238,7 +237,7 @@ function App() {
     { id: 15, name: 'Common Kitchen Appliance Access', desc: 'Equipped with a common refrigerator and microwave oven on the ground floor for quick snacks.', category: 'dining', icon: Home },
 
     // Safety & Community
-    { id: 16, name: 'Biometric Access Control', desc: 'Secure card-key and biometric entry systems ensuring absolute unauthorized entry prevention.', category: 'safety', icon: Shield },
+    { id: 16, name: 'Biometric Access Control', desc: 'Secure biometric entry systems ensuring absolute unauthorized entry prevention.', category: 'safety', icon: Shield },
     { id: 17, name: '24/7 CCTV Surveillance', desc: 'Continuous camera monitoring across corridors, entrances, and common areas.', category: 'safety', icon: Shield },
     { id: 18, name: 'On-Site Resident Warden', desc: 'A professional warden resides on-site to assist students and enforce house discipline.', category: 'safety', icon: UserCheck },
     { id: 19, name: 'Anti-Ragging Compliance', desc: 'Strict zero-tolerance policy with signed agreements required for booking.', category: 'safety', icon: FileText },
@@ -432,458 +431,457 @@ function App() {
       ) : (
         <>
           {/* Hero Section */}
-      <section id="home" className="hero-wrapper" style={{ backgroundImage: `url(${heroBg})` }}>
-        <div className="hero-overlay"></div>
-        <div className="container hero-grid">
-          <div className="hero-glass-card">
-            <div className="hero-tagline">
-              <Sparkles size={14} />
-              <span>Brand New Building for the 2026 Academic Year</span>
-            </div>
+          <section id="home" className="hero-wrapper" style={{ backgroundImage: `url(${heroBg})` }}>
+            <div className="hero-overlay"></div>
+            <div className="container hero-grid">
+              <div className="hero-glass-card">
+                <div className="hero-tagline">
+                  <Sparkles size={14} />
+                  <span>Brand New Building for the 2026 Academic Year</span>
+                </div>
 
-            <h1 className="hero-title">
-              Your Perfect Study <br />
-              <span>Environment Awaits</span>
-            </h1>
+                <h1 className="hero-title">
+                  Your Perfect Study <br />
+                  <span>Environment Awaits</span>
+                </h1>
 
-            <p className="hero-desc">
-              Comfortable rooms, peaceful study spaces, high-speed Wi-Fi, and a secure environment designed for students.
-            </p>
+                <p className="hero-desc">
+                  Comfortable rooms, peaceful study spaces, high-speed Wi-Fi, and a secure environment designed for students.
+                </p>
 
-            <div className="hero-actions">
-              <button className="btn btn-primary" onClick={() => scrollTo('booking')}>
-                Book Your Room <ArrowRight size={18} />
-              </button>
-              <button className="btn btn-secondary" onClick={() => scrollTo('amenities')}>
-                Explore Facilities
-              </button>
-            </div>
+                <div className="hero-actions">
+                  <button className="btn btn-primary" onClick={() => scrollTo('booking')}>
+                    Book Your Room <ArrowRight size={18} />
+                  </button>
+                  <button className="btn btn-secondary" onClick={() => scrollTo('amenities')}>
+                    Explore Facilities
+                  </button>
+                </div>
 
-            <div className="hero-stats">
-              <div className="stat-item">
-                <span className="stat-val">1.2 km</span>
-                <span className="stat-lbl">From D.Y. Patil University</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-val">50 Max</span>
-                <span className="stat-lbl">Student Capacity</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-val">1:1</span>
-                <span className="stat-lbl">Student-to-Desk Ratio</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Choose Us Section */}
-      <section className="section bg-alt-gradient" style={{ position: 'relative' }}>
-        <div className="glow-backdrop" style={{ top: '20%', right: '10%' }}></div>
-        <div className="container">
-          <div className="section-header reveal">
-            <span className="section-label">Why Choose Us</span>
-            <h2 className="section-title">An Infrastructure Designed for Student Growth</h2>
-            <p>We believe a hostel shouldn't just be a place to sleep. It should provide a seamless environment that supports your academic achievements, personal health, and recreation.</p>
-          </div>
-
-          <div className="features-grid reveal">
-            {/* Feature 1 */}
-            <div className="card feat-card">
-              <div className="feat-icon-box">
-                <Home size={24} />
-              </div>
-              <h3 className="feat-title">Brand New Building</h3>
-              <p className="feat-desc">Enjoy fresh interiors, pristine walls, modern fixtures, and clean, contemporary architecture. Be the first generation of students to live in this premium block.</p>
-            </div>
-
-            {/* Feature 2 */}
-            <div className="card feat-card">
-              <div className="feat-icon-box">
-                <BookOpen size={24} />
-              </div>
-              <h3 className="feat-title">1:1 Study Desk & Chair</h3>
-              <p className="feat-desc">No more sharing desks. Each student gets their own private, spacious wooden study table and ergonomic high-back chair, complete with nearby power outlets and lighting.</p>
-            </div>
-
-            {/* Feature 3 */}
-            <div className="card feat-card">
-              <div className="feat-icon-box">
-                <Utensils size={24} />
-              </div>
-              <h3 className="feat-title">Nutritious Home Dining</h3>
-              <p className="feat-desc">Weekday breakfast and dinner are included. On weekends, we cover all three meals including Saturday lunch and a special, relaxed Sunday brunch session at the hostel.</p>
-            </div>
-
-            {/* Feature 4 */}
-            <div className="card feat-card">
-              <div className="feat-icon-box">
-                <Shield size={24} />
-              </div>
-              <h3 className="feat-title">High-Security Environment</h3>
-              <p className="feat-desc">Protected by card key or biometric access gates, continuous CCTV tracking, fire safety compliance, and a resident warden who guarantees academic discipline.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* About Us Section */}
-      <section id="about" className="section bg-main-gradient" style={{ position: 'relative' }}>
-        <div className="glow-backdrop" style={{ bottom: '20%', left: '10%' }}></div>
-        <div className="container about-grid">
-          <div className="hero-media reveal-left" style={{ height: '480px' }}>
-            <div className="hero-img-container" style={{ borderRadius: 'var(--radius-lg)' }}>
-              <img src={loungeImg} alt="Moonlight Hostel Recreation Lounge and TT Table" loading="lazy" decoding="async" />
-            </div>
-            <div className="floating-card glass-panel shadow-xl" style={{ top: '32px', right: '-32px', left: 'auto', bottom: 'auto' }}>
-              <div className="about-bullet-icon" style={{ backgroundColor: 'var(--secondary-soft)', color: 'var(--secondary-accent)' }}>
-                <Gamepad2 size={20} />
-              </div>
-              <div>
-                <h4 style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-heading)' }}>Indoor Sports</h4>
-                <p style={{ fontSize: '0.8rem', color: 'var(--text-main)' }}>TT, Carrom, Chess & Badminton</p>
+                <div className="hero-stats">
+                  <div className="stat-item">
+                    <span className="stat-val">1.2 km</span>
+                    <span className="stat-lbl">From D.Y. Patil University</span>
+                  </div>
+                  <div className="stat-item">
+                    <span className="stat-val">50 Max</span>
+                    <span className="stat-lbl">Student Capacity</span>
+                  </div>
+                  <div className="stat-item">
+                    <span className="stat-val">1:1</span>
+                    <span className="stat-lbl">Student-to-Desk Ratio</span>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+          </section>
 
-          <div className="about-content reveal-right">
-            <span className="section-label">About Moonlight Hostel</span>
-            <h2 className="section-title">A Welcoming Community & Premium Living Standard</h2>
-            <p style={{ marginBottom: '20px' }}>
-              Moonlight Hostel is managed with one core principle: creating a <strong>"home away from home"</strong> for young minds pursuing their dreams in Pune. Founded in 2026, our brand new building offers college students a sanctuary that eliminates the daily hassles of housekeeping, laundry, and search for healthy food.
-            </p>
-            <p style={{ marginBottom: '24px' }}>
-              We limit our total capacity to just <strong>50 students</strong> to ensure that our dining, common areas, and amenities are never overcrowded. This cozy layout fosters a vibrant community of like-minded students, encouraging peer learning and lasting friendships.
-            </p>
+          {/* Why Choose Us Section */}
+          <section className="section bg-alt-gradient" style={{ position: 'relative' }}>
+            <div className="glow-backdrop" style={{ top: '20%', right: '10%' }}></div>
+            <div className="container">
+              <div className="section-header reveal">
+                <span className="section-label">Why Choose Us</span>
+                <h2 className="section-title">An Infrastructure Designed for Student Growth</h2>
+                <p>We believe a hostel shouldn't just be a place to sleep. It should provide a seamless environment that supports your academic achievements, personal health, and recreation.</p>
+              </div>
 
-            <div className="about-bullets">
-              <div className="about-bullet">
-                <span className="about-bullet-icon"><CheckCircle2 size={16} /></span>
-                <span>Warden & Biometric Security</span>
-              </div>
-              <div className="about-bullet">
-                <span className="about-bullet-icon"><CheckCircle2 size={16} /></span>
-                <span>Free In-house Laundry</span>
-              </div>
-              <div className="about-bullet">
-                <span className="about-bullet-icon"><CheckCircle2 size={16} /></span>
-                <span>High-Speed Fiber Wi-Fi</span>
-              </div>
-              <div className="about-bullet">
-                <span className="about-bullet-icon"><CheckCircle2 size={16} /></span>
-                <span>Daily Housekeeping</span>
-              </div>
-              <div className="about-bullet">
-                <span className="about-bullet-icon"><CheckCircle2 size={16} /></span>
-                <span>DG Power Backup 24/7</span>
-              </div>
-              <div className="about-bullet">
-                <span className="about-bullet-icon"><CheckCircle2 size={16} /></span>
-                <span>Daily Fresh Food Routine</span>
+              <div className="features-grid reveal">
+                {/* Feature 1 */}
+                <div className="card feat-card">
+                  <div className="feat-icon-box">
+                    <Home size={24} />
+                  </div>
+                  <h3 className="feat-title">Brand New Building</h3>
+                  <p className="feat-desc">Enjoy fresh interiors, pristine walls, modern fixtures, and clean, contemporary architecture. Be the first generation of students to live in this premium block.</p>
+                </div>
+
+                {/* Feature 2 */}
+                <div className="card feat-card">
+                  <div className="feat-icon-box">
+                    <BookOpen size={24} />
+                  </div>
+                  <h3 className="feat-title">1:1 Study Desk & Chair</h3>
+                  <p className="feat-desc">No more sharing desks. Each student gets their own private, spacious wooden study table and ergonomic high-back chair, complete with nearby power outlets and lighting.</p>
+                </div>
+
+                {/* Feature 3 */}
+                <div className="card feat-card">
+                  <div className="feat-icon-box">
+                    <Utensils size={24} />
+                  </div>
+                  <h3 className="feat-title">Nutritious Home Dining</h3>
+                  <p className="feat-desc">Weekday breakfast and dinner are included. On weekends, we cover all three meals including Saturday lunch and a special, relaxed Sunday brunch session at the hostel.</p>
+                </div>
+
+                {/* Feature 4 */}
+                <div className="card feat-card">
+                  <div className="feat-icon-box">
+                    <Shield size={24} />
+                  </div>
+                  <h3 className="feat-title">High-Security Environment</h3>
+                  <p className="feat-desc">Protected by card key or biometric access gates, continuous CCTV tracking, fire safety compliance, and a resident warden who guarantees academic discipline.</p>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
+          </section>
 
-      {/* Photo & Video Gallery Section */}
-      <section id="gallery" className="section bg-alt-gradient" style={{ position: 'relative' }}>
-        <div className="glow-backdrop" style={{ top: '30%', left: '15%' }}></div>
-        <div className="container">
-          <div className="section-header reveal">
-            <span className="section-label">Media Tour</span>
-            <h2 className="section-title">Take a Visual Tour of Moonlight Hostel</h2>
-            <p>Explore our premium rooms, clean dining space, common areas, and high-quality amenities. Watch the walkthrough video to see the real campus coliving experience.</p>
-          </div>
+          {/* About Us Section */}
+          <section id="about" className="section bg-main-gradient" style={{ position: 'relative' }}>
+            <div className="glow-backdrop" style={{ bottom: '20%', left: '10%' }}></div>
+            <div className="container about-grid">
+              <div className="hero-media reveal-left" style={{ height: '480px' }}>
+                <div className="hero-img-container" style={{ borderRadius: 'var(--radius-lg)' }}>
+                  <img src={loungeImg} alt="Moonlight Hostel Recreation Lounge and TT Table" loading="lazy" decoding="async" />
+                </div>
+                <div className="floating-card glass-panel shadow-xl" style={{ top: '32px', right: '-32px', left: 'auto', bottom: 'auto' }}>
+                  <div className="about-bullet-icon" style={{ backgroundColor: 'var(--secondary-soft)', color: 'var(--secondary-accent)' }}>
+                    <Gamepad2 size={20} />
+                  </div>
+                  <div>
+                    <h4 style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-heading)' }}>Indoor Sports</h4>
+                    <p style={{ fontSize: '0.8rem', color: 'var(--text-main)' }}>TT, Carrom, Chess & Badminton</p>
+                  </div>
+                </div>
+              </div>
 
-          {/* Media Category Tabs */}
-          <div className="amenities-tabs">
-            <button className={`tab-btn ${galleryFilter === 'all' ? 'active' : ''}`} onClick={() => setGalleryFilter('all')}>All Media</button>
-            <button className={`tab-btn ${galleryFilter === 'videos' ? 'active' : ''}`} onClick={() => setGalleryFilter('videos')}>Videos</button>
-            <button className={`tab-btn ${galleryFilter === 'rooms' ? 'active' : ''}`} onClick={() => setGalleryFilter('rooms')}>Rooms & Living</button>
-            <button className={`tab-btn ${galleryFilter === 'common' ? 'active' : ''}`} onClick={() => setGalleryFilter('common')}>Common Areas</button>
-            <button className={`tab-btn ${galleryFilter === 'amenities' ? 'active' : ''}`} onClick={() => setGalleryFilter('amenities')}>Facilities</button>
-          </div>
+              <div className="about-content reveal-right">
+                <span className="section-label">About Moonlight Hostel</span>
+                <h2 className="section-title">A Welcoming Community & Premium Living Standard</h2>
+                <p style={{ marginBottom: '20px' }}>
+                  Moonlight Hostel is managed with one core principle: creating a <strong>"home away from home"</strong> for young minds pursuing their dreams in Pune. Founded in 2026, our brand new building offers college students a sanctuary that eliminates the daily hassles of housekeeping, laundry, and search for healthy food.
+                </p>
+                <p style={{ marginBottom: '24px' }}>
+                  We limit our total capacity to just <strong>50 students</strong> to ensure that our dining, common areas, and amenities are never overcrowded. This cozy layout fosters a vibrant community of like-minded students, encouraging peer learning and lasting friendships.
+                </p>
 
-          {/* Gallery Media Grid */}
-          <div className="gallery-grid">
-            {filteredGalleryItems.map((item, idx) => {
-              const originalIndex = galleryItems.findIndex(gItem => gItem.src === item.src)
+                <div className="about-bullets">
+                  <div className="about-bullet">
+                    <span className="about-bullet-icon"><CheckCircle2 size={16} /></span>
+                    <span>Warden & Biometric Security</span>
+                  </div>
+                  <div className="about-bullet">
+                    <span className="about-bullet-icon"><CheckCircle2 size={16} /></span>
+                    <span>Free In-house Laundry</span>
+                  </div>
+                  <div className="about-bullet">
+                    <span className="about-bullet-icon"><CheckCircle2 size={16} /></span>
+                    <span>High-Speed Fiber Wi-Fi</span>
+                  </div>
+                  <div className="about-bullet">
+                    <span className="about-bullet-icon"><CheckCircle2 size={16} /></span>
+                    <span>Daily Housekeeping</span>
+                  </div>
+                  <div className="about-bullet">
+                    <span className="about-bullet-icon"><CheckCircle2 size={16} /></span>
+                    <span>DG Power Backup 24/7</span>
+                  </div>
+                  <div className="about-bullet">
+                    <span className="about-bullet-icon"><CheckCircle2 size={16} /></span>
+                    <span>Daily Fresh Food Routine</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
 
-              if (item.type === 'video') {
-                return (
-                  <div key={idx} className="gallery-card video-card shadow-md" onClick={() => setLightboxIndex(originalIndex)}>
-                    <div className="video-thumbnail-wrapper">
-                      <video src={item.src} quiet="true" muted playsInline className="video-preview-thumbnail" />
-                      <div className="video-overlay-play">
-                        <div className="play-button-icon">
-                          <Play size={24} fill="var(--text-heading)" color="var(--text-heading)" />
+          {/* Photo & Video Gallery Section */}
+          <section id="gallery" className="section bg-alt-gradient" style={{ position: 'relative' }}>
+            <div className="glow-backdrop" style={{ top: '30%', left: '15%' }}></div>
+            <div className="container">
+              <div className="section-header reveal">
+                <span className="section-label">Media Tour</span>
+                <h2 className="section-title">Take a Visual Tour of Moonlight Hostel</h2>
+                <p>Explore our premium rooms, clean dining space, common areas, and high-quality amenities. Watch the walkthrough video to see the real campus coliving experience.</p>
+              </div>
+
+              {/* Media Category Tabs */}
+              <div className="amenities-tabs">
+                <button className={`tab-btn ${galleryFilter === 'all' ? 'active' : ''}`} onClick={() => setGalleryFilter('all')}>All Media</button>
+                <button className={`tab-btn ${galleryFilter === 'videos' ? 'active' : ''}`} onClick={() => setGalleryFilter('videos')}>Videos</button>
+                <button className={`tab-btn ${galleryFilter === 'rooms' ? 'active' : ''}`} onClick={() => setGalleryFilter('rooms')}>Rooms & Living</button>
+                <button className={`tab-btn ${galleryFilter === 'common' ? 'active' : ''}`} onClick={() => setGalleryFilter('common')}>Common Areas</button>
+                <button className={`tab-btn ${galleryFilter === 'amenities' ? 'active' : ''}`} onClick={() => setGalleryFilter('amenities')}>Facilities</button>
+              </div>
+
+              {/* Gallery Media Grid */}
+              <div className="gallery-grid">
+                {filteredGalleryItems.map((item, idx) => {
+                  const originalIndex = galleryItems.findIndex(gItem => gItem.src === item.src)
+
+                  if (item.type === 'video') {
+                    return (
+                      <div key={idx} className="gallery-card video-card shadow-md" onClick={() => setLightboxIndex(originalIndex)}>
+                        <div className="video-thumbnail-wrapper">
+                          <video src={item.src} quiet="true" muted playsInline className="video-preview-thumbnail" />
+                          <div className="video-overlay-play">
+                            <div className="play-button-icon">
+                              <Play size={24} fill="var(--text-heading)" color="var(--text-heading)" />
+                            </div>
+                            <span className="play-duration">Video Tour</span>
+                          </div>
                         </div>
-                        <span className="play-duration">Video Tour</span>
+                        <div className="gallery-card-info">
+                          <h4>{item.title}</h4>
+                          <p>{item.desc}</p>
+                        </div>
+                      </div>
+                    )
+                  }
+
+                  return (
+                    <div key={idx} className="gallery-card shadow-md" onClick={() => setLightboxIndex(originalIndex)}>
+                      <div className="image-thumbnail-wrapper">
+                        <img src={item.src} alt={item.title} loading="lazy" decoding="async" className="gallery-image-thumbnail" />
+                      </div>
+                      <div className="gallery-card-info">
+                        <h4>{item.title}</h4>
+                        <p>{item.desc}</p>
                       </div>
                     </div>
-                    <div className="gallery-card-info">
-                      <h4>{item.title}</h4>
-                      <p>{item.desc}</p>
+                  )
+                })}
+              </div>
+            </div>
+          </section>
+
+          {/* Amenities Section */}
+          <section id="amenities" className="section bg-main-gradient" style={{ position: 'relative' }}>
+            <div className="glow-backdrop" style={{ top: '40%', right: '15%' }}></div>
+            <div className="container">
+              <div className="section-header reveal">
+                <span className="section-label">Facilities Catalogue</span>
+                <h2 className="section-title">Fully Equipped For Modern Living</h2>
+                <p>Every small detail has been curated so you can focus entirely on your college curriculum and project work. Review our complete catalogue below.</p>
+              </div>
+
+              {/* Category Tabs */}
+              <div className="amenities-tabs">
+                <button className={`tab-btn ${activeCategory === 'all' ? 'active' : ''}`} onClick={() => setActiveCategory('all')}>All Features</button>
+                <button className={`tab-btn ${activeCategory === 'living' ? 'active' : ''}`} onClick={() => setActiveCategory('living')}>Room & Living</button>
+                <button className={`tab-btn ${activeCategory === 'dining' ? 'active' : ''}`} onClick={() => setActiveCategory('dining')}>Dining & Food</button>
+                <button className={`tab-btn ${activeCategory === 'services' ? 'active' : ''}`} onClick={() => setActiveCategory('services')}>Services & Power</button>
+                <button className={`tab-btn ${activeCategory === 'safety' ? 'active' : ''}`} onClick={() => setActiveCategory('safety')}>Security & Safety</button>
+                <button className={`tab-btn ${activeCategory === 'recreation' ? 'active' : ''}`} onClick={() => setActiveCategory('recreation')}>Recreation</button>
+              </div>
+
+              {/* Grid of Filtered Amenities */}
+              <div className="amenities-grid">
+                {filteredAmenities.map(amenity => {
+                  const IconComponent = amenity.icon
+                  return (
+                    <div key={amenity.id} className="card amenity-card">
+                      <div className="amenity-icon-container">
+                        <IconComponent size={22} />
+                      </div>
+                      <div className="amenity-info">
+                        <h4>{amenity.name}</h4>
+                        <p>{amenity.desc}</p>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          </section>
+
+          {/* Room Types Section */}
+          <section id="rooms" className="section bg-alt-gradient" style={{ position: 'relative' }}>
+            <div className="glow-backdrop" style={{ top: '10%', left: '5%' }}></div>
+            <div className="container">
+              <div className="section-header reveal">
+                <span className="section-label">Room Choices</span>
+                <h2 className="section-title" style={{ color: '#ffffff' }}>Premium Room Options</h2>
+                <p style={{ color: 'var(--text-main)' }}>Select the room style that best fits your study lifestyle. Both options feature dedicated workstations and balcony configurations.</p>
+              </div>
+
+              <div className="features-grid reveal" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px' }}>
+                {/* Room 1 */}
+                <div className="card" style={{ padding: '0', overflow: 'hidden', display: 'flex', flexDirection: 'column', border: '1px solid rgba(255, 255, 255, 0.12)' }}>
+                  <div style={{ height: '240px', overflow: 'hidden', position: 'relative' }}>
+                    <img src="/photos/IMG_6663.JPG" alt="Premium Balcony Double Sharing Room" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <span className="section-label" style={{ position: 'absolute', top: '20px', left: '20px', backgroundColor: 'var(--accent-color)', color: 'var(--primary)', padding: '6px 12px', borderRadius: 'var(--radius-sm)', fontWeight: '700', fontSize: '0.8rem' }}>POPULAR</span>
+                  </div>
+                  <div style={{ padding: '32px' }}>
+                    <h3 style={{ fontSize: '1.4rem', marginBottom: '8px', color: '#ffffff' }}>Premium Double Sharing</h3>
+                    <p style={{ fontSize: '0.9rem', color: 'var(--text-main)', marginBottom: '24px' }}>
+                      Spacious premium room featuring a private attached bathroom, individual ergonomic study desks, and high-capacity storage.
+                    </p>
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '24px' }}>
+                      <span style={{ fontSize: '1.85rem', fontWeight: '800', color: 'var(--accent-color)' }}>₹1,60,000</span>
+                      <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>/ Year (All Included)</span>
+                    </div>
+                    <ul style={{ listStyle: 'none', padding: '0', margin: '0 0 32px 0', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.9rem', color: 'var(--text-main)' }}>
+                      <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><CheckCircle2 size={16} color="var(--accent-color)" /> Private Attached bathroom</li>
+                      <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><CheckCircle2 size={16} color="var(--accent-color)" /> Dedicated 1:1 Study Station</li>
+                      <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><CheckCircle2 size={16} color="var(--accent-color)" /> Dual Lockable Wardrobe Cabinets</li>
+                      <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><CheckCircle2 size={16} color="var(--accent-color)" /> Heavy-duty Washroom Geyser</li>
+                    </ul>
+                    <button className="btn btn-primary" onClick={() => scrollTo('booking')} style={{ width: '100%' }}>Book This Room</button>
+                  </div>
+                </div>
+
+                {/* Room 2 */}
+                <div className="card" style={{ padding: '0', overflow: 'hidden', display: 'flex', flexDirection: 'column', border: '1px solid rgba(255, 255, 255, 0.12)' }}>
+                  <div style={{ height: '240px', overflow: 'hidden', position: 'relative' }}>
+                    <img src="/photos/IMG_6670.JPG" alt="Standard Double Sharing Room" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  </div>
+                  <div style={{ padding: '32px' }}>
+                    <h3 style={{ fontSize: '1.4rem', marginBottom: '8px', color: '#ffffff' }}>Standard Double Sharing</h3>
+                    <p style={{ fontSize: '0.9rem', color: 'var(--text-main)', marginBottom: '24px' }}>
+                      Optimized study-centric room featuring twin custom beds, side-by-side study setups, and dedicated storage cupboards.
+                    </p>
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '24px' }}>
+                      <span style={{ fontSize: '1.85rem', fontWeight: '800', color: 'var(--accent-color)' }}>₹1,40,000</span>
+                      <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>/ Year (All Included)</span>
+                    </div>
+                    <ul style={{ listStyle: 'none', padding: '0', margin: '0 0 32px 0', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.9rem', color: 'var(--text-main)' }}>
+                      <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><CheckCircle2 size={16} color="var(--accent-color)" /> Side-by-Side Study Workspace</li>
+                      <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><CheckCircle2 size={16} color="var(--accent-color)" /> Custom Compact Cupboards</li>
+                      <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><CheckCircle2 size={16} color="var(--accent-color)" /> High-Speed Wi-Fi & Generator Backup</li>
+                      <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><CheckCircle2 size={16} color="var(--accent-color)" /> Daily Housekeeping Access</li>
+                    </ul>
+                    <button className="btn btn-secondary" onClick={() => scrollTo('booking')} style={{ width: '100%' }}>Book This Room</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Testimonials Section */}
+          <section id="testimonials" className="section bg-main-gradient" style={{ position: 'relative' }}>
+            <div className="glow-backdrop" style={{ bottom: '10%', right: '5%' }}></div>
+            <div className="container">
+              <div className="section-header reveal">
+                <span className="section-label">Reviews</span>
+                <h2 className="section-title" style={{ color: '#ffffff' }}>What Our Students Say</h2>
+                <p style={{ color: 'var(--text-main)' }}>Read experiences from students living at Moonlight Hostel studying near D.Y. Patil University.</p>
+              </div>
+
+              <div className="features-grid reveal" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
+                {/* Card 1 */}
+                <div className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', border: '1px solid rgba(255, 255, 255, 0.12)' }}>
+                  <div>
+                    <div style={{ display: 'flex', gap: '4px', marginBottom: '16px' }}>
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} size={16} color="var(--accent-color)" fill="var(--accent-color)" />
+                      ))}
+                    </div>
+                    <p style={{ fontStyle: 'italic', fontSize: '0.95rem', color: '#ffffff', marginBottom: '24px', lineHeight: '1.6' }}>
+                      "The study desk in my room and the peaceful atmosphere have really helped me focus. I've become much more productive since moving here. Definitely one of the best hostels in Lohegaon!""                    </p>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '16px' }}>
+                    <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: 'var(--secondary)', color: '#ffffff', display: 'flex', alignItems: 'center', justifyItems: 'center', justifyContent: 'center', fontWeight: '700', fontSize: '0.95rem' }}>AS</div>
+                    <div>
+                      <h4 style={{ fontSize: '0.95rem', color: '#ffffff', fontWeight: '700' }}>Sharad Kasar</h4>
+                      <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>D.Y. Patil CS Student</span>
                     </div>
                   </div>
-                )
-              }
-
-              return (
-                <div key={idx} className="gallery-card shadow-md" onClick={() => setLightboxIndex(originalIndex)}>
-                  <div className="image-thumbnail-wrapper">
-                    <img src={item.src} alt={item.title} loading="lazy" decoding="async" className="gallery-image-thumbnail" />
-                  </div>
-                  <div className="gallery-card-info">
-                    <h4>{item.title}</h4>
-                    <p>{item.desc}</p>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Amenities Section */}
-      <section id="amenities" className="section bg-main-gradient" style={{ position: 'relative' }}>
-        <div className="glow-backdrop" style={{ top: '40%', right: '15%' }}></div>
-        <div className="container">
-          <div className="section-header reveal">
-            <span className="section-label">Facilities Catalogue</span>
-            <h2 className="section-title">Fully Equipped For Modern Living</h2>
-            <p>Every small detail has been curated so you can focus entirely on your college curriculum and project work. Review our complete catalogue below.</p>
-          </div>
-
-          {/* Category Tabs */}
-          <div className="amenities-tabs">
-            <button className={`tab-btn ${activeCategory === 'all' ? 'active' : ''}`} onClick={() => setActiveCategory('all')}>All Features</button>
-            <button className={`tab-btn ${activeCategory === 'living' ? 'active' : ''}`} onClick={() => setActiveCategory('living')}>Room & Living</button>
-            <button className={`tab-btn ${activeCategory === 'dining' ? 'active' : ''}`} onClick={() => setActiveCategory('dining')}>Dining & Food</button>
-            <button className={`tab-btn ${activeCategory === 'services' ? 'active' : ''}`} onClick={() => setActiveCategory('services')}>Services & Power</button>
-            <button className={`tab-btn ${activeCategory === 'safety' ? 'active' : ''}`} onClick={() => setActiveCategory('safety')}>Security & Safety</button>
-            <button className={`tab-btn ${activeCategory === 'recreation' ? 'active' : ''}`} onClick={() => setActiveCategory('recreation')}>Recreation</button>
-          </div>
-
-          {/* Grid of Filtered Amenities */}
-          <div className="amenities-grid">
-            {filteredAmenities.map(amenity => {
-              const IconComponent = amenity.icon
-              return (
-                <div key={amenity.id} className="card amenity-card">
-                  <div className="amenity-icon-container">
-                    <IconComponent size={22} />
-                  </div>
-                  <div className="amenity-info">
-                    <h4>{amenity.name}</h4>
-                    <p>{amenity.desc}</p>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Room Types Section */}
-      <section id="rooms" className="section bg-alt-gradient" style={{ position: 'relative' }}>
-        <div className="glow-backdrop" style={{ top: '10%', left: '5%' }}></div>
-        <div className="container">
-          <div className="section-header reveal">
-            <span className="section-label">Room Choices</span>
-            <h2 className="section-title" style={{ color: '#ffffff' }}>Premium Room Options</h2>
-            <p style={{ color: 'var(--text-main)' }}>Select the room style that best fits your study lifestyle. Both options feature dedicated workstations and balcony configurations.</p>
-          </div>
-
-          <div className="features-grid reveal" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px' }}>
-            {/* Room 1 */}
-            <div className="card" style={{ padding: '0', overflow: 'hidden', display: 'flex', flexDirection: 'column', border: '1px solid rgba(255, 255, 255, 0.12)' }}>
-              <div style={{ height: '240px', overflow: 'hidden', position: 'relative' }}>
-                <img src="/photos/IMG_6663.JPG" alt="Premium Balcony Double Sharing Room" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                <span className="section-label" style={{ position: 'absolute', top: '20px', left: '20px', backgroundColor: 'var(--accent-color)', color: 'var(--primary)', padding: '6px 12px', borderRadius: 'var(--radius-sm)', fontWeight: '700', fontSize: '0.8rem' }}>POPULAR</span>
-              </div>
-              <div style={{ padding: '32px' }}>
-                <h3 style={{ fontSize: '1.4rem', marginBottom: '8px', color: '#ffffff' }}>Balcony Double Sharing</h3>
-                <p style={{ fontSize: '0.9rem', color: 'var(--text-main)', marginBottom: '24px' }}>
-                  Spacious premium room featuring a private attached balcony, individual ergonomic study desks, and high-capacity storage.
-                </p>
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '24px' }}>
-                  <span style={{ fontSize: '1.85rem', fontWeight: '800', color: 'var(--accent-color)' }}>₹1,60,000</span>
-                  <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>/ Year (All Included)</span>
-                </div>
-                <ul style={{ listStyle: 'none', padding: '0', margin: '0 0 32px 0', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.9rem', color: 'var(--text-main)' }}>
-                  <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><CheckCircle2 size={16} color="var(--accent-color)" /> Private Attached Balcony</li>
-                  <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><CheckCircle2 size={16} color="var(--accent-color)" /> Dedicated 1:1 Study Station</li>
-                  <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><CheckCircle2 size={16} color="var(--accent-color)" /> Dual Lockable Wardrobe Cabinets</li>
-                  <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><CheckCircle2 size={16} color="var(--accent-color)" /> Heavy-duty Washroom Geyser</li>
-                </ul>
-                <button className="btn btn-primary" onClick={() => scrollTo('booking')} style={{ width: '100%' }}>Book This Room</button>
-              </div>
-            </div>
-
-            {/* Room 2 */}
-            <div className="card" style={{ padding: '0', overflow: 'hidden', display: 'flex', flexDirection: 'column', border: '1px solid rgba(255, 255, 255, 0.12)' }}>
-              <div style={{ height: '240px', overflow: 'hidden', position: 'relative' }}>
-                <img src="/photos/IMG_6670.JPG" alt="Standard Double Sharing Room" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              </div>
-              <div style={{ padding: '32px' }}>
-                <h3 style={{ fontSize: '1.4rem', marginBottom: '8px', color: '#ffffff' }}>Standard Double Sharing</h3>
-                <p style={{ fontSize: '0.9rem', color: 'var(--text-main)', marginBottom: '24px' }}>
-                  Optimized study-centric room featuring twin custom beds, side-by-side study setups, and dedicated storage cupboards.
-                </p>
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '24px' }}>
-                  <span style={{ fontSize: '1.85rem', fontWeight: '800', color: 'var(--accent-color)' }}>₹1,40,000</span>
-                  <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>/ Year (All Included)</span>
-                </div>
-                <ul style={{ listStyle: 'none', padding: '0', margin: '0 0 32px 0', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.9rem', color: 'var(--text-main)' }}>
-                  <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><CheckCircle2 size={16} color="var(--accent-color)" /> Side-by-Side Study Workspace</li>
-                  <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><CheckCircle2 size={16} color="var(--accent-color)" /> Custom Compact Cupboards</li>
-                  <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><CheckCircle2 size={16} color="var(--accent-color)" /> High-Speed Wi-Fi & Generator Backup</li>
-                  <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><CheckCircle2 size={16} color="var(--accent-color)" /> Daily Housekeeping Access</li>
-                </ul>
-                <button className="btn btn-secondary" onClick={() => scrollTo('booking')} style={{ width: '100%' }}>Book This Room</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section id="testimonials" className="section bg-main-gradient" style={{ position: 'relative' }}>
-        <div className="glow-backdrop" style={{ bottom: '10%', right: '5%' }}></div>
-        <div className="container">
-          <div className="section-header reveal">
-            <span className="section-label">Reviews</span>
-            <h2 className="section-title" style={{ color: '#ffffff' }}>What Our Students Say</h2>
-            <p style={{ color: 'var(--text-main)' }}>Read experiences from students living at Moonlight Hostel studying near D.Y. Patil University.</p>
-          </div>
-
-          <div className="features-grid reveal" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
-            {/* Card 1 */}
-            <div className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', border: '1px solid rgba(255, 255, 255, 0.12)' }}>
-              <div>
-                <div style={{ display: 'flex', gap: '4px', marginBottom: '16px' }}>
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={16} color="var(--accent-color)" fill="var(--accent-color)" />
-                  ))}
-                </div>
-                <p style={{ fontStyle: 'italic', fontSize: '0.95rem', color: '#ffffff', marginBottom: '24px', lineHeight: '1.6' }}>
-                  "The individual study desk and silent hours are a blessing. My productivity has shot up since moving here! Best hostel in Lohegaon."
-                </p>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '16px' }}>
-                <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: 'var(--secondary)', color: '#ffffff', display: 'flex', alignItems: 'center', justifyItems: 'center', justifyContent: 'center', fontWeight: '700', fontSize: '0.95rem' }}>AS</div>
-                <div>
-                  <h4 style={{ fontSize: '0.95rem', color: '#ffffff', fontWeight: '700' }}>Aman Sharma</h4>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>D.Y. Patil CS Student</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Card 2 */}
-            <div className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', border: '1px solid rgba(255, 255, 255, 0.12)' }}>
-              <div>
-                <div style={{ display: 'flex', gap: '4px', marginBottom: '16px' }}>
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={16} color="var(--accent-color)" fill="var(--accent-color)" />
-                  ))}
-                </div>
-                <p style={{ fontStyle: 'italic', fontSize: '0.95rem', color: '#ffffff', marginBottom: '24px', lineHeight: '1.6' }}>
-                  "Biometric entry and the warden's support make my parents feel completely safe. Food is also exactly like home, fresh and hot."
-                </p>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '16px' }}>
-                <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: 'var(--secondary)', color: '#ffffff', display: 'flex', alignItems: 'center', justifyItems: 'center', justifyContent: 'center', fontWeight: '700', fontSize: '0.95rem' }}>RM</div>
-                <div>
-                  <h4 style={{ fontSize: '0.95rem', color: '#ffffff', fontWeight: '700' }}>Rohan Mehta</h4>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Mechanical Engg. Student</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Card 3 */}
-            <div className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', border: '1px solid rgba(255, 255, 255, 0.12)' }}>
-              <div>
-                <div style={{ display: 'flex', gap: '4px', marginBottom: '16px' }}>
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={16} color="var(--accent-color)" fill="var(--accent-color)" />
-                  ))}
-                </div>
-                <p style={{ fontStyle: 'italic', fontSize: '0.95rem', color: '#ffffff', marginBottom: '24px', lineHeight: '1.6' }}>
-                  "The high-speed Wi-Fi and 24/7 power backup mean I never miss a coding deadline. Absolutely recommend it for engineering students."
-                </p>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '16px' }}>
-                <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: 'var(--secondary)', color: '#ffffff', display: 'flex', alignItems: 'center', justifyItems: 'center', justifyContent: 'center', fontWeight: '700', fontSize: '0.95rem' }}>SG</div>
-                <div>
-                  <h4 style={{ fontSize: '0.95rem', color: '#ffffff', fontWeight: '700' }}>Siddharth Goel</h4>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>IT Student</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Booking and Bank Details Section */}
-      <section id="booking" className="section bg-alt-gradient">
-        <div className="container">
-          <div className="section-header reveal">
-            <span className="section-label">Reservations</span>
-            <h2 className="section-title">Simple Booking & Value Structure</h2>
-            <p>Secure your room for the upcoming batch. Double sharing rooms with balconies are booked on a first-come, first-serve basis following standard university rules.</p>
-          </div>
-
-          <div className="booking-grid reveal">
-            <div className="booking-info-panel">
-              <h3>Pricing & Inclusions</h3>
-              <p style={{ color: 'var(--text-main)', marginBottom: '20px' }}>
-                Moonlight Hostel offers a highly straightforward, annual transparent pricing package. There are no hidden monthly maintenance fees or surprise charges.
-              </p>
-
-              <div className="card" style={{ padding: '24px', backgroundColor: 'rgba(255, 255, 255, 0.05)', borderLeft: '4px solid var(--accent-color)', borderTop: '1px solid rgba(255, 255, 255, 0.08)', borderRight: '1px solid rgba(255, 255, 255, 0.08)', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: 'var(--radius-md)' }}>
-                <h4 style={{ fontSize: '1.2rem', marginBottom: '8px', color: '#ffffff' }}>
-                  ₹1,40,000 - ₹1,60,000 / Year <span style={{ fontSize: '0.85rem', fontWeight: 500, color: 'var(--text-main)' }}>(Double Sharing Room)</span>
-                </h4>
-                <p style={{ fontSize: '0.9rem', color: 'var(--text-main)' }}>
-                  Includes premium double-sharing furnishings, high-speed Wi-Fi, 24/7 power backup, daily room housekeeping, free laundry service, attached washrooms, and daily meals (Breakfast + Dinner on weekdays, 3 full meals on weekends).
-                </p>
-              </div>
-
-              <div className="booking-steps">
-                <div className="step-card">
-                  <div className="step-num">1</div>
-                  <div className="step-content">
-                    <h4>Make Bank Deposit</h4>
-                    <p>Transfer the initial booking token or full deposit to the Moonlight Hostel bank account detailed below.</p>
-                  </div>
                 </div>
 
-                <div className="step-card">
-                  <div className="step-num">2</div>
-                  <div className="step-content">
-                    <h4>Fill Admission Google Form</h4>
-                    <p>
-                      Open and complete the registration details at {' '}
-                      <a href="https://forms.gle/82tYE6cUqCWuKfyD9" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-color)', fontWeight: 600, textDecoration: 'underline' }}>
-                        forms.gle/82tYE6cUqCWuKfyD9
-                      </a>
+                {/* Card 2 */}
+                <div className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', border: '1px solid rgba(255, 255, 255, 0.12)' }}>
+                  <div>
+                    <div style={{ display: 'flex', gap: '4px', marginBottom: '16px' }}>
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} size={16} color="var(--accent-color)" fill="var(--accent-color)" />
+                      ))}
+                    </div>
+                    <p style={{ fontStyle: 'italic', fontSize: '0.95rem', color: '#ffffff', marginBottom: '24px', lineHeight: '1.6' }}>
+                      "The biometric entry and the warden make me feel safe, and my parents don't have to worry. The food is fresh, hot, and tastes just like home."
                     </p>
                   </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '16px' }}>
+                    <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: 'var(--secondary)', color: '#ffffff', display: 'flex', alignItems: 'center', justifyItems: 'center', justifyContent: 'center', fontWeight: '700', fontSize: '0.95rem' }}>RM</div>
+                    <div>
+                      <h4 style={{ fontSize: '0.95rem', color: '#ffffff', fontWeight: '700' }}>Krishna Nagtilak</h4>
+                      <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Mechanical Engg. Student</span>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="step-card">
-                  <div className="step-num">3</div>
-                  <div className="step-content">
-                    <h4>Confirm Room Number via WhatsApp</h4>
-                    <p>Send the transaction screenshot to coordinator <strong>Somnath Bhalsing</strong> on WhatsApp to choose your specific room and grab your key.</p>
+                {/* Card 3 */}
+                <div className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', border: '1px solid rgba(255, 255, 255, 0.12)' }}>
+                  <div>
+                    <div style={{ display: 'flex', gap: '4px', marginBottom: '16px' }}>
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} size={16} color="var(--accent-color)" fill="var(--accent-color)" />
+                      ))}
+                    </div>
+                    <p style={{ fontStyle: 'italic', fontSize: '0.95rem', color: '#ffffff', marginBottom: '24px', lineHeight: '1.6' }}>
+                      "The Wi-Fi is fast, and the power backup is always reliable, so I never have to worry while studying or working on my projects. I highly recommend this hostel for engineering students."
+                    </p>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '16px' }}>
+                    <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: 'var(--secondary)', color: '#ffffff', display: 'flex', alignItems: 'center', justifyItems: 'center', justifyContent: 'center', fontWeight: '700', fontSize: '0.95rem' }}>SG</div>
+                    <div>
+                      <h4 style={{ fontSize: '0.95rem', color: '#ffffff', fontWeight: '700' }}>Swayam Talekar</h4>
+                      <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>IT Student</span>
+                    </div>
                   </div>
                 </div>
               </div>
+            </div>
+          </section>
 
-              {/* Bank Account Details */}
-              {/* <div className="bank-card">
+          {/* Booking and Bank Details Section */}
+          <section id="booking" className="section bg-alt-gradient">
+            <div className="container">
+              <div className="section-header reveal">
+                <span className="section-label">Reservations</span>
+                <h2 className="section-title">Simple Booking & Value Structure</h2>
+                <p>Secure your room for the upcoming batch. Double sharing rooms with balconies are booked on a first-come, first-serve basis following standard university rules.</p>
+              </div>
+
+              <div className="booking-grid reveal">
+                <div className="booking-info-panel">
+                  <h3>Pricing & Inclusions</h3>
+                  <p style={{ color: 'var(--text-main)', marginBottom: '20px' }}>
+                    Moonlight Hostel offers a highly straightforward, annual transparent pricing package. There are no hidden monthly maintenance fees or surprise charges.
+                  </p>
+
+                  <div className="card" style={{ padding: '24px', backgroundColor: 'rgba(255, 255, 255, 0.05)', borderLeft: '4px solid var(--accent-color)', borderTop: '1px solid rgba(255, 255, 255, 0.08)', borderRight: '1px solid rgba(255, 255, 255, 0.08)', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', borderRadius: 'var(--radius-md)' }}>
+                    <h4 style={{ fontSize: '1.2rem', marginBottom: '8px', color: '#ffffff' }}>
+                      ₹1,40,000 - ₹1,60,000 / Year <span style={{ fontSize: '0.85rem', fontWeight: 500, color: 'var(--text-main)' }}>(Double Sharing Room)</span>
+                    </h4>
+                    <p style={{ fontSize: '0.9rem', color: 'var(--text-main)' }}>
+                      Includes premium double-sharing furnishings, high-speed Wi-Fi, 24/7 power backup, daily room housekeeping, free laundry service, attached washrooms, and daily meals (Breakfast + Dinner on weekdays, 3 full meals on weekends).
+                    </p>
+                  </div>
+
+                  <div className="booking-steps">
+                    <div className="step-card">
+                      <div className="step-num">1</div>
+                      <div className="step-content">
+                        <h4>Make Bank Deposit</h4>
+                        <p>Transfer the booking token or full deposit using the bank account details provided by Moonlight Hostel.</p>
+                      </div>
+                    </div>
+
+                    <div className="step-card">
+                      <div className="step-num">2</div>
+                      <div className="step-content">
+                        <h4>Fill Admission Google Form</h4>
+                        <p>
+                          Open and complete the registration details at {' '}
+                          <a href="https://forms.gle/82tYE6cUqCWuKfyD9" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-color)', fontWeight: 600, textDecoration: 'underline' }}>
+                            forms.gle/82tYE6cUqCWuKfyD9
+                          </a>
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="step-card">
+                      <div className="step-num">3</div>
+                      <div className="step-content">
+                        <h4>Confirm Room Number via WhatsApp</h4>
+                        <p>Send the transaction screenshot to coordinator <strong>Somnath Bhalsing</strong> on WhatsApp to choose your specific room and grab your key.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bank Account Details */}
+                  {/* <div className="bank-card">
                 <h4>Official Payment Bank Account</h4>
                 <div className="bank-details-grid">
                   <div className="bank-detail-item">
@@ -908,116 +906,116 @@ function App() {
                   </div>
                 </div>
               </div> */}
-            </div>
-
-            {/* Direct Booking & Support Info Panel */}
-            <div id="contact" className="booking-form-panel" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '40px' }}>
-              <h3 style={{ fontSize: '1.75rem', marginBottom: '12px', color: '#ffffff' }}>Direct Booking & Support</h3>
-              <p style={{ color: 'var(--text-main)', marginBottom: '32px', fontSize: '0.95rem', lineHeight: 1.6 }}>
-                Skip the forms! Connect directly with our representatives for instant room bookings, virtual tours, availability status, or fee clarifications.
-              </p>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '32px' }}>
-                <a
-                  href="https://wa.me/919270132323?text=Hi%20Somnath,%20I'm%20interested%20in%20booking%20a%20double%20sharing%20room%20at%20Moonlight%20Hostel."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-accent"
-                  style={{ width: '100%', backgroundColor: '#25d366', color: '#ffffff', borderColor: '#25d366', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', height: '48px', fontSize: '1rem', fontWeight: 600 }}
-                >
-                  <MessageSquare size={20} /> Chat on WhatsApp
-                </a>
-
-                <a
-                  href="tel:+919270132323"
-                  className="btn btn-secondary"
-                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', height: '48px', fontSize: '1rem', fontWeight: 600, border: '1px solid rgba(255, 255, 255, 0.2)' }}
-                >
-                  <Phone size={18} /> Call Representative (+91 92701 32323)
-                </a>
-              </div>
-
-              <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '24px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-                  <div className="about-bullet-icon" style={{ backgroundColor: 'var(--secondary-soft)', color: 'var(--secondary-accent)', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <UserCheck size={16} />
-                  </div>
-                  <span style={{ fontSize: '0.9rem', color: 'var(--text-main)' }}><strong>Resident Warden:</strong> Somnath Bhalsing available 24/7 on-site</span>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <div className="about-bullet-icon" style={{ backgroundColor: 'var(--secondary-soft)', color: 'var(--secondary-accent)', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Shield size={16} />
-                  </div>
-                  <span style={{ fontSize: '0.9rem', color: 'var(--text-main)' }}><strong>Secure Environment:</strong> Biometric verification for new assignments</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+                {/* Direct Booking & Support Info Panel */}
+                <div id="contact" className="booking-form-panel" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '40px' }}>
+                  <h3 style={{ fontSize: '1.75rem', marginBottom: '12px', color: '#ffffff' }}>Direct Booking & Support</h3>
+                  <p style={{ color: 'var(--text-main)', marginBottom: '32px', fontSize: '0.95rem', lineHeight: 1.6 }}>
+                    Skip the forms! Connect directly with our representatives for instant room bookings, virtual tours, availability status, or fee clarifications.
+                  </p>
 
-      {/* Location / Proximity Section */}
-      <section className="section bg-main-gradient" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
-        <div className="container">
-          <div className="section-header reveal">
-            <span className="section-label">Prime Location</span>
-            <h2 className="section-title">Minutes from Campus, Close to Everything</h2>
-            <p>Enjoy Lohegaon's peaceful environment while staying close to classrooms, cafes, grocery stores, and local transport networks.</p>
-          </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '32px' }}>
+                    <a
+                      href="https://wa.me/919270132323?text=Hi%20Somnath,%20I'm%20interested%20in%20booking%20a%20double%20sharing%20room%20at%20Moonlight%20Hostel."
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-accent"
+                      style={{ width: '100%', backgroundColor: '#25d366', color: '#ffffff', borderColor: '#25d366', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', height: '48px', fontSize: '1rem', fontWeight: 600 }}
+                    >
+                      <MessageSquare size={20} /> Chat on WhatsApp
+                    </a>
 
-          <div className="location-grid reveal">
-            <div>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '16px' }}>Address Details</h3>
-              <p style={{ fontSize: '1.05rem', color: 'var(--text-heading)', fontWeight: 600, marginBottom: '8px' }}>
-                Moonlight Boys Hostel
-              </p>
-              <p style={{ color: 'var(--text-main)', marginBottom: '24px', lineHeight: 1.7 }}>
-                D.Y. Patil University Road,<br />
-                Sai Samruddhi Park, Nimbalkar Nagar, Lane No. 6,<br />
-                Lohegaon, Pune - 411047
-              </p>
+                    <a
+                      href="tel:+919270132323"
+                      className="btn btn-secondary"
+                      style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', height: '48px', fontSize: '1rem', fontWeight: 600, border: '1px solid rgba(255, 255, 255, 0.2)' }}
+                    >
+                      <Phone size={18} /> Call Representative (+91 92701 32323)
+                    </a>
+                  </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <div className="about-bullet-icon" style={{ backgroundColor: 'var(--secondary-soft)', color: 'var(--secondary)' }}>
-                    <MapPin size={16} />
-                  </div>
-                  <div>
-                    <span style={{ fontWeight: 600, color: 'var(--text-heading)' }}>1.2 Km distance: </span>
-                    <span style={{ color: 'var(--text-main)' }}>Just a 3-minute ride or a 12-minute walk to the main university campus gates.</span>
-                  </div>
-                </div>
+                  <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '24px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+                      <div className="about-bullet-icon" style={{ backgroundColor: 'var(--secondary-soft)', color: 'var(--secondary-accent)', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <UserCheck size={16} />
+                      </div>
+                      <span style={{ fontSize: '0.9rem', color: 'var(--text-main)' }}><strong>Resident Warden:</strong> Somnath Bhalsing available 24/7 on-site</span>
+                    </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <div className="about-bullet-icon" style={{ backgroundColor: 'var(--secondary-soft)', color: 'var(--secondary)' }}>
-                    <Clock size={16} />
-                  </div>
-                  <div>
-                    <span style={{ fontWeight: 600, color: 'var(--text-heading)' }}>Optional Shuttle: </span>
-                    <span style={{ color: 'var(--text-main)' }}>Direct transit from the hostel doorstep to D.Y. Patil campus available at extra charge.</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <div className="about-bullet-icon" style={{ backgroundColor: 'var(--secondary-soft)', color: 'var(--secondary-accent)', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <Shield size={16} />
+                      </div>
+                      <span style={{ fontSize: '0.9rem', color: 'var(--text-main)' }}><strong>Secure Environment:</strong> Biometric verification for new assignments</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+          </section>
 
-            {/* Real Google Map Embed */}
-            <div className="map-mockup shadow-lg">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d236.3194150083901!2d73.91477640792495!3d18.614092696003972!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2c692ed565e23%3A0x2c2a47070c0ebe05!2sJW77%2BJW4%2C%20Lane%20Number%206%2C%20Lohegaon%2C%20Pune%2C%20Maharashtra%20411047!5e0!3m2!1sen!2sin!4v1781172505631!5m2!1sen!2sin"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Moonlight Hostel Google Map Location"
-              ></iframe>
+          {/* Location / Proximity Section */}
+          <section className="section bg-main-gradient" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
+            <div className="container">
+              <div className="section-header reveal">
+                <span className="section-label">Prime Location</span>
+                <h2 className="section-title">Minutes from Campus, Close to Everything</h2>
+                <p>Enjoy Lohegaon's peaceful environment while staying close to classrooms, cafes, grocery stores, and local transport networks.</p>
+              </div>
+
+              <div className="location-grid reveal">
+                <div>
+                  <h3 style={{ fontSize: '1.5rem', marginBottom: '16px' }}>Address Details</h3>
+                  <p style={{ fontSize: '1.05rem', color: 'var(--text-heading)', fontWeight: 600, marginBottom: '8px' }}>
+                    Moonlight Boys Hostel
+                  </p>
+                  <p style={{ color: 'var(--text-main)', marginBottom: '24px', lineHeight: 1.7 }}>
+                    D.Y. Patil University Road,<br />
+                    Sai Samruddhi Park, Nimbalkar Nagar, Lane No. 6,<br />
+                    Lohegaon, Pune - 411047
+                  </p>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <div className="about-bullet-icon" style={{ backgroundColor: 'var(--secondary-soft)', color: 'var(--secondary)' }}>
+                        <MapPin size={16} />
+                      </div>
+                      <div>
+                        <span style={{ fontWeight: 600, color: 'var(--text-heading)' }}>1.2 Km distance: </span>
+                        <span style={{ color: 'var(--text-main)' }}>Just a 3-minute ride or a 12-minute walk to the main university campus gates.</span>
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                      <div className="about-bullet-icon" style={{ backgroundColor: 'var(--secondary-soft)', color: 'var(--secondary)' }}>
+                        <Clock size={16} />
+                      </div>
+                      <div>
+                        <span style={{ fontWeight: 600, color: 'var(--text-heading)' }}>Optional Shuttle: </span>
+                        <span style={{ color: 'var(--text-main)' }}>Direct transit from the hostel doorstep to D.Y. Patil campus available at extra charge.</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Real Google Map Embed */}
+                <div className="map-mockup shadow-lg">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d236.3194150083901!2d73.91477640792495!3d18.614092696003972!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2c692ed565e23%3A0x2c2a47070c0ebe05!2sJW77%2BJW4%2C%20Lane%20Number%206%2C%20Lohegaon%2C%20Pune%2C%20Maharashtra%20411047!5e0!3m2!1sen!2sin!4v1781172505631!5m2!1sen!2sin"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen=""
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Moonlight Hostel Google Map Location"
+                  ></iframe>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
-      </>
+          </section>
+        </>
       )}
 
       {/* Footer */}
